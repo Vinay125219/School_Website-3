@@ -2354,118 +2354,102 @@
       </div>
     </footer>
 
-    <!--Footer Script-->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Back to top button functionality
-        const backToTopButton = document.getElementById("back-to-top");
+  <!--Footer Script-->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Back to top button functionality
+      const backToTopButton = document.getElementById('back-to-top');
 
-        // Show button after scrolling down 300px
-        window.addEventListener("scroll", function () {
-          if (window.pageYOffset > 300) {
-            backToTopButton.classList.add("visible");
-          } else {
-            backToTopButton.classList.remove("visible");
-          }
-        });
-
-        // Scroll to top when button is clicked
-        backToTopButton.addEventListener("click", function (e) {
-          e.preventDefault();
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-
-        // Ensure animation classes are applied
-        const footerColumns = document.querySelectorAll(".footer-column");
-        footerColumns.forEach((column) => {
-          column.style.opacity = "1";
-          column.style.transform = "translateY(0)";
-        });
-
-        // Handle touch events for mobile
-        if ("ontouchstart" in window) {
-          // Disable hover effects that can cause issues on touch devices
-          document.documentElement.classList.add("touch-device");
-
-          // Add tap functionality to social links
-          const socialLinks = document.querySelectorAll(".social-link");
-          socialLinks.forEach((link) => {
-            link.addEventListener("touchstart", function () {
-              this.classList.add("active");
-            });
-
-            link.addEventListener("touchend", function () {
-              setTimeout(() => {
-                this.classList.remove("active");
-              }, 300);
-            });
-          });
-        }
-
-        // Improve form submission on mobile
-        const newsletterForm = document.querySelector(".newsletter-form");
-        if (newsletterForm) {
-          newsletterForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            const emailInput = this.querySelector(".newsletter-input");
-
-            if (emailInput.value.trim() !== "") {
-              // Show success message
-              const successMessage = document.createElement("div");
-              successMessage.className = "newsletter-success";
-              successMessage.style.color = "#2ecc71";
-              successMessage.style.fontSize = "14px";
-              successMessage.style.marginTop = "10px";
-              successMessage.textContent = "Thank you for subscribing!";
-
-              // Insert after the form
-              this.parentNode.insertBefore(successMessage, this.nextSibling);
-
-              // Clear input
-              emailInput.value = "";
-
-              // Remove success message after 3 seconds
-              setTimeout(() => {
-                successMessage.remove();
-              }, 3000);
-            }
-          });
-        }
-
-        // Add responsive menu toggle for mobile
-        const quickLinks = document.querySelector("#quick-links");
-        if (quickLinks && window.innerWidth < 768) {
-          const heading = quickLinks.querySelector("h3");
-          const linksList = quickLinks.querySelector("ul");
-
-          // Initially hide the links on mobile
-          if (window.innerWidth < 768) {
-            linksList.style.display = "none";
-            heading.style.cursor = "pointer";
-          }
-        }
-
-        // Add intersection observer for animation
-        if ("IntersectionObserver" in window) {
-          const observer = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add("visible");
-                  observer.unobserve(entry.target);
-                }
-              });
-            },
-            { threshold: 0.1 }
-          );
-
-          // Observe footer columns
-          document.querySelectorAll(".footer-column").forEach((column) => {
-            observer.observe(column);
-          });
+      // Show button after scrolling down 300px
+      window.addEventListener('scroll', function () {
+        if (window.pageYOffset > 300) {
+          backToTopButton.classList.add('visible');
+        } else {
+          backToTopButton.classList.remove('visible');
         }
       });
-    </script>
+
+      // Scroll to top when button is clicked
+      backToTopButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // Ensure animation classes are applied
+      const footerColumns = document.querySelectorAll('.footer-column');
+      footerColumns.forEach(column => {
+        column.style.opacity = '1';
+        column.style.transform = 'translateY(0)';
+      });
+
+      // Handle touch events for mobile
+      if ('ontouchstart' in window) {
+        // Disable hover effects that can cause issues on touch devices
+        document.documentElement.classList.add('touch-device');
+
+        // Add tap functionality to social links
+        const socialLinks = document.querySelectorAll('.social-link');
+        socialLinks.forEach(link => {
+          link.addEventListener('touchstart', function () {
+            this.classList.add('active');
+          });
+
+          link.addEventListener('touchend', function () {
+            setTimeout(() => {
+              this.classList.remove('active');
+            }, 300);
+          });
+        });
+      }
+
+      // Improve form submission on mobile
+      const newsletterForm = document.querySelector('.newsletter-form');
+      if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const emailInput = this.querySelector('.newsletter-input');
+
+          if (emailInput.value.trim() !== '') {
+            // Show success message
+            const successMessage = document.createElement('div');
+            successMessage.className = 'newsletter-success';
+            successMessage.style.color = '#2ecc71';
+            successMessage.style.fontSize = '14px';
+            successMessage.style.marginTop = '10px';
+            successMessage.textContent = 'Thank you for subscribing!';
+
+            // Insert after the form
+            this.parentNode.insertBefore(successMessage, this.nextSibling);
+
+            // Clear input
+            emailInput.value = '';
+
+            // Remove success message after 3 seconds
+            setTimeout(() => {
+              successMessage.remove();
+            }, 3000);
+          }
+        });
+      }
+
+      // Add intersection observer for animation
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+
+        // Observe footer columns
+        document.querySelectorAll('.footer-column').forEach(column => {
+          observer.observe(column);
+        });
+      }
+    });
+  </script>
 
     <!--Header Scripting-->
     <script>

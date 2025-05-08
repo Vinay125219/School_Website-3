@@ -1786,6 +1786,7 @@
     </div>
   </footer>
   <!--Footer Script-->
+  <!--Footer Script-->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       // Back to top button functionality
@@ -1861,20 +1862,6 @@
             }, 3000);
           }
         });
-      }
-
-      // Add responsive menu toggle for mobile
-      const quickLinks = document.querySelector('#quick-links');
-      if (quickLinks && window.innerWidth < 768) {
-        const heading = quickLinks.querySelector('h3');
-        const linksList = quickLinks.querySelector('ul');
-
-        // Initially hide the links on mobile
-        if (window.innerWidth < 768) {
-          linksList.style.display = 'none';
-          heading.style.cursor = 'pointer';
-
-        }
       }
 
       // Add intersection observer for animation
