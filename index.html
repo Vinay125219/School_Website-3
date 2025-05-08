@@ -1,0 +1,4006 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spring Wood School</title>
+
+  <style>
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Hero Section */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Arial", sans-serif;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* Hero Section with Slider */
+    .hero {
+      position: relative;
+      height: 70vh;
+      overflow: hidden;
+    }
+
+    .slider {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .slide:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #fff;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #1a237e;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      font-weight: 500;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #0d1752;
+      transform: translateY(-3px);
+    }
+
+    /* Slider Navigation */
+    .slider-nav {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 3;
+    }
+
+    .slider-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .slider-dot.active {
+      background-color: #fff;
+    }
+
+    /* Responsive styles */
+    @media screen and (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .hero {
+        height: 60vh;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .btn {
+        padding: 0.6rem 1.2rem;
+      }
+
+      .slider-dot {
+        width: 10px;
+        height: 10px;
+      }
+    }
+
+    /* Section Styles */
+    section {
+      padding: 4rem 1rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: #1a237e;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .section-title h2::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background-color: #1a237e;
+    }
+
+    /* About Section */
+    .about-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .about-card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .about-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .about-card h3 {
+      color: #1a237e;
+      margin-bottom: 1rem;
+    }
+
+    /* Academics Section */
+    .academics {
+      background-color: #eee;
+    }
+
+    .academics-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .academics-text {
+      flex: 1;
+      min-width: 300px;
+      padding-right: 2rem;
+    }
+
+    .academics-image {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .academics-image img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* School Life Section */
+    .life-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .life-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      height: 250px;
+    }
+
+    .life-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .life-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .life-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(26, 35, 126, 0.8);
+      color: #fff;
+      padding: 1rem;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+    }
+
+    .life-item:hover .life-caption {
+      transform: translateY(0);
+    }
+
+    /* Facilities Section */
+    .facilities {
+      background-color: #eee;
+    }
+
+    .facilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .facility {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .facility-image {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .facility-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .facility:hover .facility-image img {
+      transform: scale(1.1);
+    }
+
+    .facility-content {
+      padding: 1.5rem;
+    }
+
+    .facility-content h3 {
+      color: #1a237e;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Advantages Section */
+    .advantages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .advantage {
+      text-align: center;
+      padding: 2rem;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .advantage:hover {
+      transform: translateY(-10px);
+    }
+
+    .advantage-icon {
+      font-size: 3rem;
+      color: #1a237e;
+      margin-bottom: 1rem;
+    }
+
+    .advantage h3 {
+      color: #1a237e;
+      margin-bottom: 1rem;
+    }
+
+    /* Photo Gallery */
+    .gallery {
+      background-color: #eee;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      height: 250px;
+      border-radius: 8px;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    /* Admission Section */
+    .admission-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .admission-text {
+      flex: 1;
+      min-width: 300px;
+      padding-right: 2rem;
+    }
+
+    .admission-form {
+      flex: 1;
+      min-width: 300px;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .section-title h2 {
+        font-size: 2rem;
+      }
+
+      .academics-text,
+      .academics-image,
+      .admission-text,
+      .admission-form {
+        padding-right: 0;
+        margin-bottom: 2rem;
+      }
+    }
+  </style>
+  <!--Header Styling-->
+  <style>
+    /* Base styles and reset */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #3d5a80;
+      --primary-light: #4f76a8;
+      --primary-dark: #2c4158;
+      --accent: #ee6c4d;
+      --light: #e0fbfc;
+      --dark: #293241;
+      --neutral: #98c1d9;
+      --header-height: 70px;
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Header container */
+    .header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+      transition: var(--transition);
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 clamp(1rem, 3vw, 2rem);
+      height: var(--header-height);
+      max-width: 1800px;
+      margin: 0 auto;
+      transition: var(--transition);
+    }
+
+    .header.scrolled .header-inner {
+      height: calc(var(--header-height) - 15px);
+    }
+
+    /* Logo styling */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: clamp(8px, 1.5vw, 12px);
+    }
+
+    .logo-image {
+      height: clamp(35px, 4vw, 45px);
+      width: clamp(35px, 4vw, 45px);
+      border-radius: 50%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .header.scrolled .logo-image {
+      height: clamp(30px, 3.5vw, 38px);
+      width: clamp(30px, 3.5vw, 38px);
+    }
+
+    .logo-text {
+      font-size: clamp(1rem, 1.5vw, 1.3rem);
+      font-weight: 600;
+      color: var(--primary);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .logo-text::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--accent);
+      transition: var(--transition);
+    }
+
+    .logo:hover .logo-text::after {
+      width: 100%;
+    }
+
+    /* Navigation menu */
+    .nav-menu {
+      display: flex;
+      gap: clamp(3px, 1vw, 5px);
+      align-items: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: clamp(3px, 1vw, 5px);
+      padding: clamp(6px, 1.5vw, 8px) clamp(8px, 2vw, 12px);
+      font-weight: 500;
+      font-size: clamp(0.8rem, 1.1vw, 1rem);
+      color: var(--dark);
+      border-radius: 6px;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--primary);
+      background-color: rgba(61, 90, 128, 0.08);
+    }
+
+    .nav-link.active {
+      color: var(--primary);
+      background-color: rgba(61, 90, 128, 0.12);
+    }
+
+    /* Dropdown menu */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      position: absolute;
+      top: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 200px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      pointer-events: none;
+    }
+
+    .dropdown:hover .dropdown-content {
+      opacity: 1;
+      visibility: visible;
+      top: 100%;
+      pointer-events: auto;
+    }
+
+    .dropdown-link {
+      display: block;
+      padding: 10px 18px;
+      transition: var(--transition);
+      border-left: 3px solid transparent;
+    }
+
+    .dropdown-link:hover {
+      background-color: rgba(61, 90, 128, 0.08);
+      color: var(--primary);
+      border-left-color: var(--accent);
+      padding-left: 22px;
+    }
+
+    /* Contact button */
+    .contact-btn {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: clamp(6px, 1.5vw, 9px) clamp(12px, 2.5vw, 18px);
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: clamp(0.8rem, 1.1vw, 1rem);
+      box-shadow: 0 4px 12px rgba(61, 90, 128, 0.3);
+      transition: var(--transition);
+      margin-left: clamp(4px, 1vw, 8px);
+      white-space: nowrap;
+    }
+
+    .contact-btn:hover {
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      transform: translateY(-2px);
+    }
+
+    /* Mobile hamburger menu */
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      width: clamp(24px, 3vw, 28px);
+      height: clamp(18px, 2.5vw, 20px);
+      position: relative;
+      z-index: 101;
+    }
+
+    .hamburger span {
+      display: block;
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      background: var(--primary);
+      border-radius: 3px;
+      opacity: 1;
+      left: 0;
+      transform: rotate(0deg);
+      transition: var(--transition);
+    }
+
+    .hamburger span:nth-child(1) {
+      top: 0px;
+    }
+
+    .hamburger span:nth-child(2) {
+      top: 8px;
+    }
+
+    .hamburger span:nth-child(3) {
+      top: 16px;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      top: 8px;
+      transform: rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      top: 8px;
+      transform: rotate(-45deg);
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      z-index: 99;
+      transition: var(--transition);
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 1100px) {
+      .nav-link {
+        padding: 8px 10px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .hamburger {
+        display: block;
+      }
+
+      .nav-menu {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        width: 100%;
+        height: calc(100vh - var(--header-height));
+        background-color: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 2rem;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+      }
+
+      .nav-menu.active {
+        transform: translateX(0);
+      }
+
+      .nav-item {
+        width: 100%;
+      }
+
+      .nav-link {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.1rem;
+      }
+
+      .contact-btn {
+        width: 100%;
+        text-align: center;
+        margin: 1rem 0;
+        padding: 1rem;
+      }
+
+      .dropdown-content {
+        position: static;
+        transform: none;
+        width: 100%;
+        box-shadow: none;
+        margin-top: 0.5rem;
+        padding-left: 1rem;
+      }
+
+      .dropdown-link {
+        padding: 0.8rem;
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-inner {
+        padding: 0 1rem;
+      }
+
+      .logo-text {
+        font-size: 1.1rem;
+      }
+
+      .nav-menu {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-inner {
+        padding: 0 0.8rem;
+      }
+
+      .logo-text {
+        font-size: 1rem;
+      }
+
+      .nav-menu {
+        padding: 1rem;
+      }
+
+      .nav-link {
+        padding: 0.8rem;
+        font-size: 1rem;
+      }
+    }
+  </style>
+  <!--Academic Style-->
+  <style>
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Section Title Animation */
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .section-title h2 {
+      font-size: 36px;
+      color: #2c3e50;
+      display: inline-block;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px;
+      bottom: 0;
+      left: 0;
+      background-color: #27ae60;
+      animation: expand-line 1.5s ease-out forwards;
+    }
+
+    @keyframes expand-line {
+      to {
+        width: 100%;
+      }
+    }
+
+    /* Academics Content Layout */
+    .academics-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    /* Feature Cards Container */
+    .feature-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+      justify-content: center;
+    }
+
+    /* Main Content Card */
+    .main-card {
+      flex: 1;
+      min-width: 300px;
+      max-width: 600px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .main-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-header {
+      background: #27ae60;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .card-header h3 {
+      font-size: 24px;
+      margin-bottom: 0;
+    }
+
+    .card-body {
+      padding: 25px;
+    }
+
+    .card-body h3 {
+      color: #2c3e50;
+      margin: 20px 0 15px;
+      font-size: 22px;
+      border-left: 4px solid #27ae60;
+      padding-left: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .card-body h3:first-child {
+      margin-top: 0;
+    }
+
+    .card-body h3:hover {
+      transform: translateX(5px);
+    }
+
+    .card-body p {
+      margin-bottom: 20px;
+      text-align: justify;
+      line-height: 1.8;
+    }
+
+    /* Feature Card */
+    .feature-card {
+      flex: 1;
+      min-width: 220px;
+      max-width: 250px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-icon {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(39, 174, 96, 0.1);
+      color: #27ae60;
+      font-size: 36px;
+    }
+
+    .feature-content {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .feature-content h4 {
+      margin-bottom: 10px;
+      color: #2c3e50;
+      font-size: 18px;
+    }
+
+    .feature-content p {
+      font-size: 14px;
+      color: #666;
+    }
+
+    /* Image Card */
+    .image-card {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .image-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .image-card img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .image-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .image-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      color: white;
+      padding: 20px;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .image-card:hover .image-overlay {
+      transform: translateY(0);
+    }
+
+    .image-overlay h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .image-overlay p {
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+    /* Tabs and Content */
+    .tabs-container {
+      margin-top: 25px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      border-bottom: none;
+      border-radius: 5px 5px 0 0;
+      margin-right: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .tab.active {
+      background: white;
+      border-bottom: 1px solid white;
+      color: #27ae60;
+      font-weight: bold;
+      margin-bottom: -1px;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-top: none;
+      background: white;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.5s forwards;
+    }
+
+    /* Animation Classes */
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+
+    .slide-in-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      animation: slideInLeft 1s forwards;
+    }
+
+    .slide-in-right {
+      opacity: 0;
+      transform: translateX(50px);
+      animation: slideInRight 1s forwards;
+    }
+
+    .scale-in {
+      opacity: 0;
+      transform: scale(0.9);
+      animation: scaleIn 0.8s forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Progress bar */
+    .progress-container {
+      margin: 15px 0;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #27ae60;
+      border-radius: 4px;
+      width: 0;
+      transition: width 1.5s ease-in-out;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .academics-content {
+        flex-direction: column;
+      }
+
+      .main-card,
+      .image-card {
+        width: 100%;
+        max-width: none;
+      }
+
+      .feature-cards {
+        justify-content: center;
+      }
+
+      .feature-card {
+        min-width: 150px;
+      }
+    }
+  </style>
+
+  <!--Footer Style-->
+  <style>
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Footer Styles */
+    footer {
+      background: #2c3e50;
+      color: #fff;
+      padding: 50px 0 0;
+      position: relative;
+      margin: 3rem 0 0 0;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to right, #3498db, #2ecc71, #f1c40f, #e74c3c);
+    }
+
+    .container-for-footer {
+      width: 100%;
+      max-width: 1525px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+
+    /* Footer Column Card Style */
+    .footer-column {
+      flex: 1;
+      min-width: 240px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s forwards;
+    }
+
+    .footer-column:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Set different animation delays for each column */
+    .footer-column:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .footer-column:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+
+    .footer-column:nth-child(3) {
+      animation-delay: 0.5s;
+    }
+
+    .footer-column:nth-child(4) {
+      animation-delay: 0.7s;
+    }
+
+    .footer-column h3 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+      display: inline-block;
+    }
+
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 3px;
+      background: #3498db;
+      transition: width 0.3s ease;
+    }
+
+    .footer-column:hover h3::after {
+      width: 100%;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 15px;
+      position: relative;
+      padding-left: 25px;
+      transition: transform 0.3s ease;
+      word-wrap: break-word;
+    }
+
+    .footer-column ul li:hover {
+      transform: translateX(5px);
+    }
+
+    /* Icons for contact information */
+    .footer-column#contact-us ul li::before {
+      font-family: sans-serif;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .footer-column#contact-us ul li:nth-child(1)::before {
+      content: '📍';
+    }
+
+    .footer-column#contact-us ul li:nth-child(2)::before {
+      content: '📞';
+    }
+
+    .footer-column#contact-us ul li:nth-child(3)::before {
+      content: '✉️';
+    }
+
+    /* Icons for school hours */
+    .footer-column#school-hours ul li::before {
+      font-family: sans-serif;
+      position: absolute;
+      left: 0;
+      top: 0;
+      content: '🕒';
+    }
+
+    /* Quick links styling */
+    .footer-column ul li a {
+      color: #ecf0f1;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      position: relative;
+      padding-left: 15px;
+      display: inline-block;
+    }
+
+    .footer-column ul li a::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #3498db;
+      font-size: 18px;
+      transition: transform 0.3s ease;
+    }
+
+    .footer-column ul li a:hover {
+      color: #3498db;
+    }
+
+    .footer-column ul li a:hover::before {
+      transform: translateY(-50%) translateX(5px);
+    }
+
+    /* Social Links */
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #3498db;
+      border-radius: 50%;
+      transform: scale(0);
+      transition: transform 0.3s ease;
+      z-index: -1;
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px);
+      color: #fff;
+    }
+
+    .social-link:hover::before {
+      transform: scale(1);
+    }
+
+    /* Facebook */
+    .social-link.facebook:hover::before {
+      background: #1877f2;
+    }
+
+    /* Twitter */
+    .social-link.twitter:hover::before {
+      background: #1da1f2;
+    }
+
+    /* Instagram */
+    .social-link.instagram:hover::before {
+      background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+    }
+
+    /* YouTube */
+    .social-link.youtube:hover::before {
+      background: #ff0000;
+    }
+
+    /* Newsletter Form */
+    .newsletter-form {
+      display: flex;
+      margin-top: 15px;
+      overflow: hidden;
+      border-radius: 5px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      border: none;
+      padding: 12px 15px;
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.9);
+      width: 100%;
+    }
+
+    .newsletter-input:focus {
+      outline: none;
+    }
+
+    .newsletter-button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 0 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .newsletter-button:hover {
+      background: #2980b9;
+    }
+
+    /* Copyright Section */
+    .copyright {
+      background: rgba(0, 0, 0, 0.2);
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 20px;
+      position: relative;
+    }
+
+    .copyright::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .copyright p {
+      font-size: 14px;
+      color: #bdc3c7;
+    }
+
+    /* Back to top button */
+    .back-to-top {
+      position: fixed;
+      /* Changed from absolute to fixed for better mobile experience */
+      right: 20px;
+      bottom: 20px;
+      /* Adjusted position for better visibility */
+      width: 50px;
+      height: 50px;
+      background: #3498db;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      text-decoration: none;
+      z-index: 1000;
+      /* Ensures button is always on top */
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: #2980b9;
+      transform: translateY(-5px);
+    }
+
+    .back-to-top::before {
+      content: '↑';
+      font-size: 24px;
+    }
+
+    /* Animation Keyframes */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Footer Logo */
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo-icon {
+      width: 40px;
+      height: 40px;
+      background: #3498db;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    /* Map container */
+    .map-container {
+      height: 150px;
+      width: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      position: relative;
+      background: #ecf0f1;
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: url('/api/placeholder/600/300') center/cover;
+      position: relative;
+    }
+
+    .map-placeholder::after {
+      content: 'View on Google Maps';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(52, 152, 219, 0.9);
+      color: white;
+      padding: 5px;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    /* Pulsing dot for location */
+    .location-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+      background: #e74c3c;
+      border-radius: 50%;
+    }
+
+    .location-dot::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(231, 76, 60, 0.6);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(3);
+        opacity: 0;
+      }
+    }
+
+    /* Improved Responsive Styles */
+    /* Extra large devices (large desktops) */
+    @media (max-width: 1200px) {
+      .container {
+        max-width: 1000px;
+      }
+    }
+
+    /* Large devices (desktops) */
+    @media (max-width: 992px) {
+      .footer-container {
+        justify-content: space-around;
+        gap: 20px;
+      }
+
+      .footer-column {
+        flex: 0 0 calc(50% - 20px);
+        min-width: 0;
+      }
+    }
+
+    /* Medium devices (tablets) */
+    @media (max-width: 768px) {
+      footer {
+        padding: 30px 0 0;
+      }
+
+      .footer-container {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .footer-column {
+        flex: 0 0 100%;
+        min-width: 0;
+      }
+
+      .social-links {
+        justify-content: center;
+      }
+
+      .newsletter-form {
+        max-width: 100%;
+      }
+
+      /* Stack animation delays for better mobile experience */
+      .footer-column:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+
+      .footer-column:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      .footer-column:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+
+      .footer-column:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+    }
+
+    /* Small devices (landscape phones) */
+    @media (max-width: 576px) {
+      footer {
+        padding: 20px 0 0;
+      }
+
+      .footer-column {
+        padding: 15px;
+      }
+
+      .footer-column h3 {
+        font-size: 18px;
+      }
+
+      .container {
+        padding: 0 15px;
+      }
+
+      .copyright p {
+        font-size: 12px;
+      }
+
+      .back-to-top {
+        width: 40px;
+        height: 40px;
+        right: 15px;
+        bottom: 15px;
+      }
+    }
+
+    /* Extra small devices */
+    @media (max-width: 320px) {
+      .footer-column {
+        padding: 10px;
+      }
+
+      .social-link {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    /* Touch device optimizations */
+    @media (hover: none) {
+      .footer-column:hover {
+        transform: none;
+      }
+
+      .social-link:hover {
+        transform: none;
+      }
+
+      /* Make buttons larger for better touch targets */
+      .newsletter-button {
+        padding: 0 25px;
+      }
+
+      .back-to-top {
+        width: 55px;
+        height: 55px;
+      }
+    }
+  </style>
+
+  <!--Admission Style-->
+  <style>
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Section Title Animation */
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .section-title h2 {
+      font-size: 36px;
+      color: #2c3e50;
+      display: inline-block;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px;
+      bottom: 0;
+      left: 0;
+      background-color: #3498db;
+      animation: expand-line 1.5s ease-out forwards;
+    }
+
+    @keyframes expand-line {
+      to {
+        width: 100%;
+      }
+    }
+
+    /* Cards Container */
+    .admission-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    /* Process Card */
+    .process-card {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .process-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-header {
+      background: #3498db;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .card-header h3 {
+      font-size: 24px;
+      margin-bottom: 0;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .card-body h4 {
+      color: #2c3e50;
+      margin: 20px 0 10px;
+      font-size: 18px;
+      border-left: 4px solid #3498db;
+      padding-left: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .card-body h4:hover {
+      transform: translateX(5px);
+    }
+
+    .card-body p {
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+
+    .card-body ul {
+      list-style-position: inside;
+      margin: 15px 0;
+      padding-left: 10px;
+    }
+
+    .card-body li {
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 15px;
+      list-style-type: none;
+    }
+
+    .card-body li::before {
+      content: "•";
+      color: #3498db;
+      font-size: 20px;
+      position: absolute;
+      left: 0;
+      top: -5px;
+    }
+
+    /* Form Card */
+    .form-card {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-control:focus {
+      border-color: #3498db;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+      outline: none;
+    }
+
+    .btn {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background 0.3s, transform 0.2s;
+      display: block;
+      width: 100%;
+    }
+
+    .btn:hover {
+      background: #2980b9;
+      transform: translateY(-2px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    /* Animated Step Indicator */
+    .steps-container {
+      margin: 30px 0;
+    }
+
+    .steps {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: #e0e0e0;
+      z-index: 1;
+    }
+
+    .step {
+      width: 33.33%;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid #e0e0e0;
+      color: #999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      font-weight: bold;
+      transition: all 0.5s ease;
+    }
+
+    .step-title {
+      font-size: 14px;
+      color: #777;
+      transition: color 0.5s ease;
+    }
+
+    .step.active .step-number {
+      border-color: #3498db;
+      background: #3498db;
+      color: white;
+      transform: scale(1.2);
+    }
+
+    .step.active .step-title {
+      color: #3498db;
+      font-weight: bold;
+    }
+
+    /* Animation trigger classes */
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .admission-content {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .process-card,
+      .form-card {
+        width: 100%;
+      }
+
+      .step-title {
+        font-size: 12px;
+      }
+    }
+  </style>
+
+  <!-- Chat Bot Widget Style -->
+  <style>
+    .chat-widget {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .chat-button {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #1a237e;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .chat-button:hover {
+      transform: scale(1.1);
+    }
+
+    .chat-window {
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 350px;
+      height: 450px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-window.active {
+      display: flex;
+    }
+
+    .chat-header {
+      background-color: #1a237e;
+      color: white;
+      padding: 15px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .close-chat {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .chat-body {
+      padding: 15px;
+      height: 300px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-message {
+      margin-bottom: 15px;
+      max-width: 80%;
+      padding: 10px 15px;
+      border-radius: 20px;
+      word-wrap: break-word;
+    }
+
+    .bot-message {
+      background-color: #f1f1f1;
+      align-self: flex-start;
+      border-bottom-left-radius: 5px;
+    }
+
+    .user-message {
+      background-color: #1a237e;
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 5px;
+    }
+
+    .chat-input-container {
+      padding: 10px;
+      border-top: 1px solid #eee;
+      display: flex;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      outline: none;
+    }
+
+    .send-button {
+      background-color: #1a237e;
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-left: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chat-form {
+      padding: 15px;
+      border-top: 1px solid #eee;
+      display: none;
+    }
+
+    .chat-form.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .submit-chat-form {
+      background-color: #1a237e;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .typing-indicator {
+      display: none;
+      background-color: #f1f0f0;
+      padding: 8px 15px;
+      border-radius: 18px;
+      margin-bottom: 10px;
+      align-self: flex-start;
+      margin-top: 5px;
+    }
+
+    .typing-indicator.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .typing-indicator span {
+      height: 8px;
+      width: 8px;
+      margin: 0 2px;
+      background-color: #999;
+      border-radius: 50%;
+      display: inline-block;
+      animation: bounce 1.3s linear infinite;
+    }
+
+    .typing-indicator span:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .typing-indicator span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-indicator span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0);
+      }
+
+      30% {
+        transform: translateY(-4px);
+      }
+    }
+  </style>
+
+  <!--Back to top-->
+  <style>
+    /* Back to top button styles */
+    #back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 90px;
+      /* Moved to the left of chat button */
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #333;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s, visibility 0.3s;
+      visibility: hidden;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+      /* Lower than chat but still above content */
+    }
+
+    #back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* For smaller screens, stack them vertically */
+    @media (max-width: 768px) {
+      #back-to-top {
+        bottom: 90px;
+        right: 20px;
+      }
+    }
+  </style>
+
+  <!--Map Style Sheet-->
+  <style>
+    /* Scoped styles with unique class prefix 'sl-' (school location) */
+    .sl-map-section {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+      animation: sl-fadeUp 1s ease-out forwards;
+    }
+
+    @keyframes sl-fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .sl-section-header {
+      margin-bottom: 30px;
+      padding: 20px;
+    }
+
+    .sl-title {
+      font-size: 2rem;
+      color: #2c3e50;
+      margin-bottom: 29px;
+      position: relative;
+      display: flex;
+      animation: sl-colorChange 8s infinite alternate;
+      justify-content: center;
+
+    }
+
+    @keyframes sl-colorChange {
+      0% {
+        color: #2c3e50;
+      }
+
+      50% {
+        color: #3498db;
+      }
+
+      100% {
+        color: #1abc9c;
+      }
+    }
+
+    .sl-title::after {
+      content: '';
+      position: absolute;
+      width: 70%;
+      height: 4px;
+      bottom: -10px;
+      left: 15%;
+      background: linear-gradient(90deg, transparent, #3498db, transparent);
+      animation: sl-lineWidth 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes sl-lineWidth {
+      0% {
+        width: 0;
+        left: 50%;
+      }
+
+      100% {
+        width: 70%;
+        left: 15%;
+      }
+    }
+
+    .sl-description {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: #34495e;
+      max-width: 800px;
+      margin: 0 auto 30px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: sl-fadeUp 1s ease-out 0.5s forwards;
+    }
+
+    .sl-map-container {
+      width: 100%;
+      max-width: 900px;
+      height: 400px;
+      margin: 0 auto 30px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      transform: scale(0.95);
+      animation: sl-scaleIn 1s ease-out 0.8s forwards;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .sl-map-link {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .sl-map-link::after {
+      content: 'Click to open in Google Maps';
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(44, 62, 80, 0.8);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .sl-map-link:hover::after {
+      opacity: 1;
+    }
+
+    @keyframes sl-scaleIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .sl-map-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      pointer-events: none;
+      /* This makes clicks pass through to the parent link */
+    }
+
+    .sl-btn {
+      display: inline-block;
+      padding: 12px 28px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: sl-fadeUp 1s ease-out 1s forwards;
+    }
+
+    .sl-btn:hover {
+      background: linear-gradient(135deg, #2980b9 0%, #1a252f 100%);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .sl-btn:active {
+      transform: translateY(-1px);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .sl-title {
+        font-size: 2rem;
+      }
+
+      .sl-description {
+        font-size: 1rem;
+        padding: 0 15px;
+      }
+
+      .sl-map-container {
+        height: 300px;
+      }
+
+      .sl-map-link::after {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .sl-title {
+        font-size: 1.7rem;
+      }
+
+      .sl-map-container {
+        height: 250px;
+      }
+
+      .sl-btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Improved Header with Navigation -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img class="logo-image"
+          src="https://img.freepik.com/free-vector/gradient-high-school-logo-design_23-2149626932.jpg"
+          alt="Spring Wood School Logo">
+        <span class="logo-text">Spring Wood School</span>
+      </a>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link">
+            About Us
+            <i>▾</i>
+          </a>
+          <div class="dropdown-content">
+            <a href="about_School.html" class="dropdown-link">About School</a>
+            <a href="founder_Chairman.html" class="dropdown-link">Founder Chairman</a>
+            <a href="vision_phy.html" class="dropdown-link">Vision and Philosophy</a>
+            <a href="why_us.html" class="dropdown-link">Why Choose Us</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#academics" class="nav-link">
+            Academics
+            <i>▾</i>
+          </a>
+          <div class="dropdown-content">
+            <a href="curriculum.html" class="dropdown-link">Curriculum</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="#school-life" class="nav-link">
+            School Life
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#facilities" class="nav-link">
+            Facilities
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#advantages" class="nav-link">Advantages</a>
+        </li>
+        <li class="nav-item">
+          <a href="#gallery" class="nav-link">Photo Gallery</a>
+        </li>
+        <li class="nav-item">
+          <a href="#admission" class="nav-link">Admission</a>
+        </li>
+        <li class="nav-item">
+          <a href="#contact_us_link" class="contact-btn">Contact Us</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+  <div class="overlay"></div>
+
+  <!-- Hero Section -->
+
+  <!-- Hero Section with Slider -->
+  <section class="hero">
+    <div class="slider">
+      <div class="slide active" style="
+            background-image: url('https://t4.ftcdn.net/jpg/06/28/83/51/360_F_628835191_EMMgdwXxjtd3yLBUguiz5UrxaxqByvUc.jpg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/256395/pexels-photo-256395.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/256417/pexels-photo-256417.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/3401403/pexels-photo-3401403.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/2982449/pexels-photo-2982449.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/8471799/pexels-photo-8471799.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/8613319/pexels-photo-8613319.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/8199562/pexels-photo-8199562.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/8199169/pexels-photo-8199169.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/8197987/pexels-photo-8197987.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/735911/pexels-photo-735911.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/256520/pexels-photo-256520.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/1023898/pexels-photo-1023898.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/7682340/pexels-photo-7682340.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/764681/pexels-photo-764681.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/2253916/pexels-photo-2253916.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/289737/pexels-photo-289737.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/267885/pexels-photo-267885.jpeg');
+          "></div>
+      <div class="slide" style="
+            background-image: url('https://images.pexels.com/photos/5212345/pexels-photo-5212345.jpeg');
+          "></div>
+    </div>
+
+    <div class="hero-content">
+      <h1>Spring Wood School</h1>
+      <p>
+        Nurturing minds, building character, and preparing leaders of tomorrow
+      </p>
+    </div>
+
+    <div class="slider-nav" id="sliderNav">
+      <!-- Dots will be added by JavaScript -->
+    </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="sl-title">
+        <h2>About Us</h2>
+      </div>
+      <div class="about-cards">
+        <div class="about-card">
+          <h3>Our School</h3>
+          <p>
+            Founded in 1985, Spring Wood School has been committed to
+            providing exceptional education for over three decades. Our school
+            combines academic excellence with character development to nurture
+            well-rounded individuals prepared for future challenges.
+          </p>
+        </div>
+        <div class="about-card">
+          <h3>Our Mission</h3>
+          <p>
+            We aim to inspire a lifelong love for learning, foster critical
+            thinking, and develop compassionate global citizens who contribute
+            positively to society through innovative teaching methodologies
+            and a comprehensive curriculum.
+          </p>
+        </div>
+        <div class="about-card">
+          <h3>Our Values</h3>
+          <p>
+            Excellence, Integrity, Respect, Innovation, and Community form the
+            foundation of our educational philosophy. These core values guide
+            our approach to teaching and learning, shaping the experiences of
+            our students.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Academics Section -->
+  <section id="academics" class="academics">
+    <div class="container">
+      <div class="sl-title">
+        <h2>Academics</h2>
+      </div>
+
+      <div class="academics-content">
+        <!-- Main Content Card -->
+        <div class="main-card slide-in-left" style="animation-delay: 0.2s;">
+          <div class="card-header">
+            <h3>Excellence in Education</h3>
+          </div>
+          <div class="card-body">
+            <h3>Comprehensive Curriculum</h3>
+            <p>
+              Our curriculum is designed to challenge students intellectually
+              while catering to diverse learning styles. We follow a balanced
+              approach that combines rigorous academics with creative
+              exploration.
+            </p>
+            <p>
+              From primary to senior secondary levels, our programs foster
+              critical thinking, problem-solving skills, and a deep
+              understanding of core subjects while encouraging interdisciplinary
+              connections.
+            </p>
+
+            <div class="tabs-container">
+              <div class="tabs">
+                <div class="tab active" data-tab="primary">Primary</div>
+                <div class="tab" data-tab="middle">Middle School</div>
+                <div class="tab" data-tab="high">High School</div>
+              </div>
+
+              <div class="tab-content active" id="primary-content">
+                <h4>Primary Education (Grades 1-5)</h4>
+                <p>Our primary program focuses on building strong foundations in literacy, numeracy, and social skills
+                  through engaging, hands-on activities that make learning fun.</p>
+              </div>
+
+              <div class="tab-content" id="middle-content">
+                <h4>Middle School (Grades 6-8)</h4>
+                <p>Our middle school program deepens subject knowledge while developing research skills, critical
+                  thinking, and collaboration through interdisciplinary projects.</p>
+              </div>
+
+              <div class="tab-content" id="high-content">
+                <h4>High School (Grades 9-12)</h4>
+                <p>Our high school program offers specialized tracks that prepare students for higher education while
+                  developing advanced critical thinking and analytical skills.</p>
+              </div>
+            </div>
+
+            <h3>Teaching Methodology</h3>
+            <p>
+              Our experienced faculty employs innovative teaching methods that
+              go beyond traditional classroom instruction. Through project-based
+              learning, collaborative activities, and technology integration, we
+              create engaging learning experiences that prepare students for
+              real-world challenges.
+            </p>
+          </div>
+        </div>
+
+        <!-- Image Card -->
+        <div class="image-card slide-in-right" style="animation-delay: 0.4s;">
+          <img
+            src="data:image/jpeg;base64,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"
+            alt="Students in classroom" />
+          <br><br><br>
+          <!-- Feature Cards -->
+          <div class="feature-cards">
+            <div class="feature-card scale-in" style="animation-delay: 0.6s;">
+              <div class="feature-icon">📚</div>
+              <div class="feature-content">
+                <h4>Diverse Subjects</h4>
+                <p>Wide range of academic and extracurricular subjects</p>
+              </div>
+            </div>
+
+            <div class="feature-card scale-in" style="animation-delay: 0.8s;">
+              <div class="feature-icon">🔬</div>
+              <div class="feature-content">
+                <h4>Hands-on Learning</h4>
+                <p>Practical experience in modern laboratories</p>
+              </div>
+            </div>
+
+            <div class="feature-card scale-in" style="animation-delay: 1.0s;">
+              <div class="feature-icon">💻</div>
+              <div class="feature-content">
+                <h4>Tech Integration</h4>
+                <p>Digital resources and smart classrooms</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- School Life Section -->
+  <section id="school-life" class="school-life">
+    <div class="container">
+      <div class="sl-title">
+        <h2>School Life</h2>
+      </div>
+      <div class="life-grid">
+        <div class="life-item">
+          <img src="https://vishwavidyapeeth.edu.in/wp-content/uploads/2023/07/Untitled-design-19.png"
+            alt="Sports activities" />
+          <div class="life-caption">
+            <h3>Sports & Athletics</h3>
+          </div>
+        </div>
+        <div class="life-item">
+          <img src="https://lirp.cdn-website.com/eeb64761/dms3rep/multi/opt/Art-Kids-640w.png" alt="Arts and Culture" />
+          <div class="life-caption">
+            <h3>Arts & Culture</h3>
+          </div>
+        </div>
+        <div class="life-item">
+          <img src="https://npsjpnagar.com/wp-content/uploads/2022/05/Club-blog.jpg" alt="Clubs and Activities" />
+          <div class="life-caption">
+            <h3>Clubs & Activities</h3>
+          </div>
+        </div>
+        <div class="life-item">
+          <img src="https://indusvalleyinternationalschool.com/wp-content/uploads/2018/12/mkd_9435.jpg"
+            alt="Events and Celebrations" />
+          <div class="life-caption">
+            <h3>Events & Celebrations</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Facilities Section -->
+  <section id="facilities" class="facilities">
+    <div class="container">
+      <div class="sl-title">
+        <h2>Our Facilities</h2>
+      </div>
+      <div class="facilities-grid">
+        <div class="facility">
+          <div class="facility-image">
+            <img src="https://modernschoolfbd.com/assets/img/about/smart-class-1.jpg" alt="Modern Classrooms" />
+          </div>
+          <div class="facility-content">
+            <h3>Modern Classrooms</h3>
+            <p>
+              Spacious, well-ventilated classrooms equipped with smart boards
+              and modern teaching aids to enhance the learning experience.
+            </p>
+          </div>
+        </div>
+        <div class="facility">
+          <div class="facility-image">
+            <img
+              src="https://us.123rf.com/450wm/ekkasiti/ekkasiti2302/ekkasiti230200053/205252042-school-girls-boys-girls-in-the-school-science-classroom-when-the-experiment-is-successful-them-and.jpg?ver=6https://us.123rf.com/450wm/ekkasiti/ekkasiti2302/ekkasiti230200053/205252042-school-girls-boys-girls-in-the-school-science-classroom-when-the-experiment-is-successful-them-and.jpg?ver=6"
+              alt="Science Laboratories" />
+          </div>
+          <div class="facility-content">
+            <h3>Science Laboratories</h3>
+            <p>
+              State-of-the-art laboratories for Physics, Chemistry, and
+              Biology with advanced equipment for practical learning.
+            </p>
+          </div>
+        </div>
+        <div class="facility">
+          <div class="facility-image">
+            <img src="https://sbsmschooledu.in/wp-content/uploads/2022/08/computer_1.jpg" alt="Computer Lab" />
+          </div>
+          <div class="facility-content">
+            <h3>Computer Labs</h3>
+            <p>
+              Cutting-edge computer laboratories with high-speed internet
+              access and the latest software for digital literacy.
+            </p>
+          </div>
+        </div>
+        <div class="facility">
+          <div class="facility-image">
+            <img src="https://www.theindiancambridge.edu.in/wp-content/uploads/2022/02/Gallery-Image-2-2-1024x481.jpg"
+              alt="Library" />
+          </div>
+          <div class="facility-content">
+            <h3>Library</h3>
+            <p>
+              Extensive collection of books, journals, and digital resources
+              to foster a love for reading and research.
+            </p>
+          </div>
+        </div>
+        <div class="facility">
+          <div class="facility-image">
+            <img src="https://www.openminds-hyderabad.com/img/sport.jpg" alt="Sports Complex" />
+          </div>
+          <div class="facility-content">
+            <h3>Sports Complex</h3>
+            <p>
+              Comprehensive sports facilities including indoor and outdoor
+              courts, swimming pool, and athletics track.
+            </p>
+          </div>
+        </div>
+        <div class="facility">
+          <div class="facility-image">
+            <img
+              src="https://storage.googleapis.com/wordpress_arcon/2022/09/2013b7e2-kaneland_high_school_auditorium_int05-1354x1080.jpg"
+              alt="Auditorium" />
+          </div>
+          <div class="facility-content">
+            <h3>Auditorium</h3>
+            <p>
+              Multipurpose auditorium for performances, assemblies, and
+              special events with excellent acoustics and seating.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Advantages Section -->
+  <section id="advantages" class="advantages">
+    <div class="container">
+      <div class="sl-title">
+        <h2>Our Advantages</h2>
+      </div>
+      <div class="advantages-grid">
+        <div class="advantage">
+          <div class="advantage-icon">📊</div>
+          <h3>Academic Excellence</h3>
+          <p>
+            Consistently high academic performance with outstanding results in
+            board examinations and competitive tests.
+          </p>
+        </div>
+        <div class="advantage">
+          <div class="advantage-icon">👨‍🏫</div>
+          <h3>Experienced Faculty</h3>
+          <p>
+            Highly qualified and dedicated teachers with extensive experience
+            in their respective fields.
+          </p>
+        </div>
+        <div class="advantage">
+          <div class="advantage-icon">🌍</div>
+          <h3>Global Perspective</h3>
+          <p>
+            International exposure through exchange programs, global
+            competitions, and collaborative projects.
+          </p>
+        </div>
+        <div class="advantage">
+          <div class="advantage-icon">🧠</div>
+          <h3>Holistic Development</h3>
+          <p>
+            Equal emphasis on academics, sports, arts, and character building
+            for well-rounded growth.
+          </p>
+        </div>
+        <div class="advantage">
+          <div class="advantage-icon">🔬</div>
+          <h3>Innovation Focus</h3>
+          <p>
+            Encouragement of creative thinking, problem-solving, and
+            entrepreneurial mindset through specialized programs.
+          </p>
+        </div>
+        <div class="advantage">
+          <div class="advantage-icon">🤝</div>
+          <h3>Strong Community</h3>
+          <p>
+            Supportive and inclusive community of students, parents, faculty,
+            and alumni fostering a sense of belonging.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo Gallery Section -->
+  <section id="gallery" class="gallery">
+    <div class="container">
+      <div class="sl-title">
+        <h2>Photo Gallery</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img
+            src="https://images.pexels.com/photos/2982449/pexels-photo-2982449.jpeg?cs=srgb&dl=pexels-droosmo-2982449.jpg&fm=jpg"
+            alt="School Building" />
+        </div>
+        <div class="gallery-item">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQVwQ7z3xdxE1ctDMGp-z8cOYuzNtc3NFi140THMP2LLtUFMcnlx5AmpzxDLvFoeRtb8w&usqp=CAU"
+            alt="Classroom Activity" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://assets.thehansindia.com/h-upload/2019/11/20/237534-5.webp" alt="Sports Day" />
+        </div>
+        <div class="gallery-item">
+          <img
+            src="https://scontent.fhyd2-2.fna.fbcdn.net/v/t39.30808-6/492511384_1250919807041653_8991900058766006480_n.jpg?stp=dst-jpg_p180x540_tt6&_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_ohc=YB4H6TVoCPoQ7kNvwEt7j5y&_nc_oc=AdnHxKtWJ6kbP3TrAzS8pNHegOpek7dt2t1SAj5452oIyVQZTa-GsgYYKRfHyuY_swg&_nc_zt=23&_nc_ht=scontent.fhyd2-2.fna&_nc_gid=1CnxOaFSEF9qXRiKNBhong&oh=00_AfEGLn0JNsAwcEycfXlyrZR0p_Cpi5ix503iHWkrYY6Vcg&oe=6816F57C"
+            alt="Science Exhibition" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.ytimg.com/vi/_JId2MkLEXY/maxresdefault.jpg" alt="Cultural Performance" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://thescholarschool.org/wp-content/uploads/2024/11/science-exhibition-5.jpg"
+            alt="Award Ceremony" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://www.openminds-hyderabad.com/img/beyond-classrooms/field-trips/nehru-3.jpg"
+            alt="Field Trip" />
+        </div>
+        <div class="gallery-item">
+          <img src="https://greenwoodhigh.edu.in/wp-content/uploads/2022/06/IMG_2372-scaled.jpg" alt="Art Exhibition" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Admission Section -->
+  <section id="admission" class="admission">
+    <div class="container">
+      <div class="sl-title">
+        <h2>Admission</h2>
+      </div>
+      <div class="admission-content">
+        <!-- Process Card -->
+        <div class="process-card fade-in" style="animation-delay: 0.2s;">
+          <div class="card-header">
+            <h3>Admission Process</h3>
+          </div>
+          <div class="card-body">
+            <p>
+              At Spring Wood School, we welcome students who demonstrate
+              academic potential, curiosity, and a willingness to contribute
+              positively to our school community.
+            </p>
+
+            <div class="steps-container">
+              <div class="steps">
+                <div class="step active">
+                  <div class="step-number">1</div>
+                  <div class="step-title">Apply</div>
+                </div>
+                <div class="step">
+                  <div class="step-number">2</div>
+                  <div class="step-title">Assessment</div>
+                </div>
+                <div class="step">
+                  <div class="step-number">3</div>
+                  <div class="step-title">Admission</div>
+                </div>
+              </div>
+            </div>
+
+            <h4>Eligibility</h4>
+            <p>
+              Admission is based on the student's previous academic record,
+              entrance test performance, and an interview with the student and
+              parents.
+            </p>
+
+            <h4>Required Documents</h4>
+            <ul>
+              <li>Birth Certificate</li>
+              <li>Previous School Records</li>
+              <li>Transfer Certificate (if applicable)</li>
+              <li>Passport-sized Photographs</li>
+              <li>Address Proof</li>
+            </ul>
+
+            <h4>Academic Year</h4>
+            <p>
+              Our academic year begins in April. However, admissions may be
+              considered throughout the year subject to availability of seats.
+            </p>
+          </div>
+        </div>
+        <!-- Form Card -->
+        <div class="form-card fade-in" style="animation-delay: 0.4s;">
+          <div class="card-header">
+            <h3>Inquiry Form</h3>
+          </div>
+          <div class="card-body">
+            <form id="admissionForm">
+              <div class="form-group">
+                <label for="studentName">Student Name</label>
+                <input type="text" id="studentName" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label for="grade">Grade Applying For</label>
+                <select id="grade" class="form-control" required>
+                  <option value="">Select Grade</option>
+                  <option value="nursery">Nursery</option>
+                  <option value="kg">Kindergarten</option>
+                  <option value="1">Grade 1</option>
+                  <option value="2">Grade 2</option>
+                  <option value="3">Grade 3</option>
+                  <option value="4">Grade 4</option>
+                  <option value="5">Grade 5</option>
+                  <option value="6">Grade 6</option>
+                  <option value="7">Grade 7</option>
+                  <option value="8">Grade 8</option>
+                  <option value="9">Grade 9</option>
+                  <option value="10">Grade 10</option>
+                  <option value="11">Grade 11</option>
+                  <option value="12">Grade 12</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="parentName">Parent/Guardian Name</label>
+                <input type="text" id="parentName" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label for="message">Message (Optional)</label>
+                <textarea id="message" class="form-control" rows="4"></textarea>
+              </div>
+              <button type="submit" class="btn">Submit Inquiry</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- School Location Map Section -->
+  <div class="sl-map-section">
+    <div class="sl-section-header">
+      <h1 class="sl-title">Find Our School</h1>
+      <p class="sl-description">We are conveniently located in Hyderabad. Use the map below to find directions to our
+        campus.</p>
+    </div>
+
+    <div class="sl-map-container">
+      <a href="#" class="sl-map-link" id="sl-map-link">
+        <iframe id="sl-map-iframe" class="sl-map-iframe"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3807.0351809445813!2d78.51675941468986!3d17.31004253967254!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTfCsDE4JzM2LjIiTiA3OMKwMzEnMDkuNSJF!5e0!3m2!1sen!2sin!4v1651234567890!5m2!1sen!2sin"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </a>
+    </div>
+
+    <a href="#" class="sl-btn" id="sl-directions-btn">Get Directions</a>
+  </div>
+
+  <!-- Footer -->
+  <footer id="contact_us_link">
+    <div class="container-for-footer">
+      <div class="footer-container">
+        <!-- About School - Moved to first for mobile priority -->
+        <div class="footer-column" id="about-school">
+          <div class="footer-logo">
+            <div class="footer-logo-icon">SW</div>
+            <h4>Spring Wood School</h4>
+          </div>
+          <p>Nurturing minds, building character, and preparing leaders of tomorrow since 1985.</p>
+
+          <h4 style="margin-top: 20px; font-size: 16px;">Stay Connected</h4>
+          <div class="social-links">
+            <a href="#" class="social-link facebook" aria-label="Facebook">FB</a>
+            <a href="#" class="social-link twitter" aria-label="Twitter">TW</a>
+            <a href="#" class="social-link instagram" aria-label="Instagram">IG</a>
+            <a href="#" class="social-link youtube" aria-label="YouTube">YT</a>
+          </div>
+
+          <h4 style="margin-top: 20px; font-size: 16px;">Subscribe to Newsletter</h4>
+          <form class="newsletter-form">
+            <input type="email" class="newsletter-input" placeholder="Your email address" required
+              aria-label="Email for newsletter">
+            <button type="submit" class="newsletter-button" aria-label="Subscribe">→</button>
+          </form>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-column" id="quick-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#academics">Academics</a></li>
+            <li><a href="#school-life">School Life</a></li>
+            <li><a href="#facilities">Facilities</a></li>
+            <li><a href="#admission">Admission</a></li>
+            <li><a href="#advantages">Advantages</a></li>
+            <li><a href="#gallery">Photo Gallery</a></li>
+          </ul>
+        </div>
+
+        <!-- School Hours -->
+        <div class="footer-column" id="school-hours">
+          <h3>School Hours</h3>
+          <ul>
+            <li>Monday - Friday: 8:00 AM - 3:30 PM</li>
+            <li>Saturday: 8:00 AM - 12:30 PM (Activities)</li>
+            <li>Admin Office: 8:00 AM - 5:00 PM</li>
+          </ul>
+
+          <div style="margin-top: 20px; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 15px;">
+            <h4 style="margin-bottom: 10px; font-size: 16px;">Important Dates</h4>
+            <p style="font-size: 14px; margin-bottom: 5px;">📅 Summer Break: May 15 - June 15</p>
+            <p style="font-size: 14px; margin-bottom: 5px;">📅 Next Term Begins: July 1st</p>
+            <p style="font-size: 14px;">📅 Annual Day: December 10</p>
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="footer-column" id="contact-us">
+          <h3>Contact Us</h3>
+          <ul>
+            <li>13-44/1, Sri Vidhya Twp, Annapurna Colony, Badangpet, Telangana 500058</li>
+            <li>Phone: <a href="tel:6300565660" style="color: #ecf0f1; text-decoration: none;">6300565660</a></li>
+            <li>Email: <a href="mailto:info@SpringWoodschool.edu"
+                style="color: #ecf0f1; text-decoration: none;">info@SpringWoodschool.edu</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <a href="#" class="back-to-top" id="back-to-top" aria-label="Back to Top"></a>
+
+      <div class="copyright">
+        <p>&copy; 2025 Spring Wood School. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chat Bot Widget HTML -->
+  <!-- Chat Bot Widget HTML -->
+  <div class="chat-widget">
+    <div class="chat-button" id="chat-button">💬</div>
+    <div class="chat-window" id="chat-window">
+      <div class="chat-header">
+        <span>Chat Assistance</span>
+        <button class="close-chat" id="close-chat">×</button>
+      </div>
+      <div class="chat-body" id="chat-body">
+        <div class="typing-indicator" id="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="chat-input-container">
+        <input type="text" class="chat-input" id="chat-input" placeholder="Type your message..." />
+        <button class="send-button" id="send-button">➤</button>
+      </div>
+      <div class="chat-form" id="chat-form">
+        <div class="form-group">
+          <label for="chat-name">Name</label>
+          <input type="text" id="chat-name" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="chat-place">Place</label>
+          <input type="text" id="chat-place" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="chat-mobile">Mobile Number</label>
+          <input type="tel" id="chat-mobile" class="form-control" required />
+        </div>
+        <button type="button" class="submit-chat-form" id="submit-chat-form">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- If you don't already have a back-to-top button, add this -->
+  <button id="back-to-top" title="Back to top">
+    <i class="fa fa-arrow-up"></i> <!-- If using Font Awesome -->
+    <!-- Or use a simple text arrow if not using an icon library -->
+    <!-- ↑ -->
+  </button>
+
+  <!-- JavaScript for ChatBot-->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Back to top button functionality
+      const backToTopButton = document.getElementById('back-to-top');
+
+      // Show button after scrolling down 300px
+      window.addEventListener('scroll', function () {
+        if (window.pageYOffset > 300) {
+          backToTopButton.classList.add('visible');
+        } else {
+          backToTopButton.classList.remove('visible');
+        }
+      });
+
+      // Scroll to top when button is clicked
+      backToTopButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // Chat Bot Functionality
+      const chatButton = document.getElementById("chat-button");
+      const chatWindow = document.getElementById("chat-window");
+      const closeChat = document.getElementById("close-chat");
+      const chatBody = document.getElementById("chat-body");
+      const chatInput = document.getElementById("chat-input");
+      const sendButton = document.getElementById("send-button");
+      const chatForm = document.getElementById("chat-form");
+      const typingIndicator = document.getElementById("typing-indicator");
+
+      // Check if chat window is open, and adjust back-to-top button position if needed
+      function adjustBackToTopPosition() {
+        if (chatWindow.classList.contains('active') && window.innerWidth <= 768) {
+          backToTopButton.style.bottom = '300px'; // Adjust based on your chat window height
+        } else {
+          backToTopButton.style.bottom = window.innerWidth <= 768 ? '90px' : '20px';
+        }
+      }
+
+      // Toggle chat window
+      chatButton.addEventListener("click", function () {
+        chatWindow.classList.toggle("active");
+
+        // Adjust back-to-top button position when chat opens/closes
+        adjustBackToTopPosition();
+
+        if (chatWindow.classList.contains("active") && chatBody.children.length === 1) {
+          // Only send the first message when opening for the first time
+          setTimeout(() => {
+            sendBotMessage(chatSteps[0].message);
+          }, 500);
+        }
+      });
+
+      // Close chat window
+      closeChat.addEventListener("click", function () {
+        chatWindow.classList.remove("active");
+        adjustBackToTopPosition();
+      });
+
+      // Adjust positions on window resize
+      window.addEventListener('resize', adjustBackToTopPosition);
+
+      // Initial position adjustment
+      adjustBackToTopPosition();
+
+      // Rest of your chat functionality remains the same
+      // [Your existing chat code goes here]
+
+      let currentStep = 0;
+      let userData = {
+        name: "",
+        place: "",
+        mobile: "",
+      };
+
+      // Chat bot conversation flow
+      const chatSteps = [
+        {
+          message: "Hi there! How can I help you with Spring Wood School?",
+          expectResponse: true,
+          processResponse: (response) => {
+            return "Great! I'd like to get to know you better to provide personalized assistance. Could you please tell me your name?";
+          },
+        },
+        {
+          message: "Could you please tell me your name?",
+          expectResponse: true,
+          processResponse: (response) => {
+            userData.name = response;
+            return `Nice to meet you, ${userData.name}! Where are you from?`;
+          },
+        },
+        {
+          message: "Where are you from?",
+          expectResponse: true,
+          processResponse: (response) => {
+            userData.place = response;
+            return "Thanks! Could you please share your mobile number so that our admission team can contact you?";
+          },
+        },
+        {
+          message: "Could you please share your mobile number?",
+          expectResponse: true,
+          processResponse: (response) => {
+            userData.mobile = response;
+            return `Thank you ${userData.name}! Our admission team will contact you soon at ${userData.mobile}. Meanwhile, feel free to explore our website or ask me any questions about Spring Wood School!`;
+          },
+        },
+      ];
+
+      // Function to send user message
+      function sendUserMessage() {
+        const message = chatInput.value.trim();
+        if (message === "") return;
+
+        // Display user message
+        const userMessageElement = document.createElement("div");
+        userMessageElement.classList.add("chat-message", "user-message");
+        userMessageElement.textContent = message;
+        chatBody.appendChild(userMessageElement);
+
+        // Clear input
+        chatInput.value = "";
+
+        // Scroll to bottom
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+        // Show typing indicator
+        showTypingIndicator();
+
+        // Process response based on current step
+        setTimeout(() => {
+          hideTypingIndicator();
+
+          if (
+            currentStep < chatSteps.length &&
+            chatSteps[currentStep].expectResponse
+          ) {
+            const nextMessage =
+              chatSteps[currentStep].processResponse(message);
+            currentStep++;
+
+            if (nextMessage) {
+              sendBotMessage(nextMessage);
+            }
+          }
+        }, 1000);
+      }
+
+      // Function to send bot message
+      function sendBotMessage(message) {
+        hideTypingIndicator();
+        const botMessageElement = document.createElement("div");
+        botMessageElement.classList.add("chat-message", "bot-message");
+        botMessageElement.textContent = message;
+        chatBody.appendChild(botMessageElement);
+
+        // Scroll to bottom
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }
+
+      // Function to show typing indicator
+      function showTypingIndicator() {
+        // Make sure the typing indicator is at the end of the chat body
+        if (typingIndicator.parentNode === chatBody) {
+          chatBody.removeChild(typingIndicator);
+        }
+        chatBody.appendChild(typingIndicator);
+
+        typingIndicator.classList.add("active");
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }
+
+      // Function to hide typing indicator
+      function hideTypingIndicator() {
+        typingIndicator.classList.remove("active");
+      }
+
+      // Send message on button click
+      sendButton.addEventListener("click", function () {
+        sendUserMessage();
+      });
+
+      // Send message on Enter key
+      chatInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          sendUserMessage();
+        }
+      });
+    });
+  </script>
+
+  <!--Slider-->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Get all slides
+      const slides = document.querySelectorAll(".slide");
+      const sliderNav = document.getElementById("sliderNav");
+      let currentSlide = 0;
+      let slideInterval;
+
+      // Create navigation dots
+      slides.forEach((_, index) => {
+        const dot = document.createElement("div");
+        dot.classList.add("slider-dot");
+        if (index === 0) dot.classList.add("active");
+        dot.addEventListener("click", () => {
+          goToSlide(index);
+          resetInterval();
+        });
+        sliderNav.appendChild(dot);
+      });
+
+      // Function to go to a specific slide
+      function goToSlide(n) {
+        // Remove active class from current slide and dot
+        slides[currentSlide].classList.remove("active");
+        document
+          .querySelectorAll(".slider-dot")
+        [currentSlide].classList.remove("active");
+
+        // Update current slide index
+        currentSlide = (n + slides.length) % slides.length;
+
+        // Add active class to new slide and dot
+        slides[currentSlide].classList.add("active");
+        document
+          .querySelectorAll(".slider-dot")
+        [currentSlide].classList.add("active");
+      }
+
+      // Function to go to next slide
+      function nextSlide() {
+        goToSlide(currentSlide + 1);
+      }
+
+      // Function to reset interval
+      function resetInterval() {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, 2500);
+      }
+
+      // Start automatic sliding
+      resetInterval();
+
+      // Add keyboard navigation
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowLeft") {
+          goToSlide(currentSlide - 1);
+          resetInterval();
+        } else if (e.key === "ArrowRight") {
+          goToSlide(currentSlide + 1);
+          resetInterval();
+        }
+      });
+
+      // Add swipe functionality for mobile
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      const heroSection = document.querySelector(".hero");
+
+      heroSection.addEventListener("touchstart", (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+
+      heroSection.addEventListener("touchend", (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      });
+
+      function handleSwipe() {
+        const swipeThreshold = 50;
+
+        // Left swipe
+        if (touchEndX < touchStartX - swipeThreshold) {
+          goToSlide(currentSlide + 1);
+          resetInterval();
+        }
+
+        // Right swipe
+        if (touchEndX > touchStartX + swipeThreshold) {
+          goToSlide(currentSlide - 1);
+          resetInterval();
+        }
+      }
+    });
+  </script>
+
+  <!-- JS for Maps -->
+  <script>
+    // Self-executing function to create a scope for our variables
+    (function () {
+      // School location using Plus Code instead of latitude/longitude
+      const plusCode = "8G59+XP Badangpet, Telangana";
+      // Location name that will appear on the pin
+      const locationName = "Spring Wood School";
+
+      // Function to open Google Maps
+      function slOpenGoogleMaps(e) {
+        e.preventDefault();
+        // This URL format uses the plus code and adds the location name
+        const googleMapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(locationName)}/@?q=${encodeURIComponent(plusCode)}`;
+        window.open(googleMapsUrl, '_blank');
+      }
+
+      // Wait for DOM to be fully loaded
+      document.addEventListener('DOMContentLoaded', function () {
+        // Add click event to the button
+        const directionsBtn = document.getElementById('sl-directions-btn');
+        if (directionsBtn) {
+          directionsBtn.addEventListener('click', slOpenGoogleMaps);
+        }
+
+        // Add click event to the map container
+        const mapLink = document.getElementById('sl-map-link');
+        if (mapLink) {
+          mapLink.addEventListener('click', slOpenGoogleMaps);
+        }
+
+        // For iframe, use a public Google Maps embedding approach that shows the name
+        const mapFrame = document.getElementById('sl-map-iframe');
+        if (mapFrame) {
+          // Use search parameter to show the name and place parameter for location
+          mapFrame.src = `https://maps.google.com/maps?q=${encodeURIComponent(locationName)}+${encodeURIComponent(plusCode)}&output=embed`;
+
+          // Check if on mobile and set appropriate behavior
+          const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+          if (isMobile) {
+            // Mobile-specific adjustments if needed
+            const mapLinks = document.querySelectorAll('.sl-map-link');
+            mapLinks.forEach(link => {
+              link.style.fontSize = '0.7rem';
+            });
+          }
+        }
+      });
+    })(); // Immediately invoke function to create scope
+  </script>>
+
+  <!--JS for Admissions forms-->
+  <script>
+    // Simple animations for the step process
+    document.addEventListener('DOMContentLoaded', function () {
+      // Simulate step process animation (for demo purposes)
+      const steps = document.querySelectorAll('.step');
+      let currentStep = 0;
+
+      // Function to animate through steps
+      function animateSteps() {
+        // Reset all steps
+        steps.forEach(step => step.classList.remove('active'));
+
+        // Activate current step
+        steps[currentStep].classList.add('active');
+
+        // Move to next step (loop back to beginning when reaching the end)
+        currentStep = (currentStep + 1) % steps.length;
+      }
+
+      // Start with first step active
+      steps[0].classList.add('active');
+
+      // Animate steps every 3 seconds
+      setInterval(animateSteps, 3000);
+
+      // Fade-in animation for cards
+      const fadeElements = document.querySelectorAll('.fade-in');
+      fadeElements.forEach(el => {
+        el.style.opacity = '1';
+      });
+
+      // Form submission animation (prevent actual submission for demo)
+      const form = document.getElementById('admissionForm');
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const button = this.querySelector('.btn');
+          button.textContent = 'Submitting...';
+
+          // Simulate submission process
+          setTimeout(() => {
+            button.textContent = 'Submitted Successfully!';
+            button.style.background = '#27ae60';
+
+            // Reset form after delay
+            setTimeout(() => {
+              form.reset();
+              button.textContent = 'Submit Inquiry';
+              button.style.background = '#3498db';
+            }, 3000);
+          }, 1500);
+        });
+      }
+    });
+  </script>
+
+  <!--Academics processes-->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Initialize progress bars
+      const progressBars = document.querySelectorAll('.progress-fill');
+      setTimeout(() => {
+        progressBars.forEach(bar => {
+          const width = bar.style.width;
+          bar.style.width = '0';
+          setTimeout(() => {
+            bar.style.width = width;
+          }, 300);
+        });
+      }, 1000);
+
+      // Tabs functionality
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          // Remove active class from all tabs
+          tabs.forEach(t => t.classList.remove('active'));
+          // Add active class to clicked tab
+          tab.classList.add('active');
+
+          // Hide all tab contents
+          const tabContents = document.querySelectorAll('.tab-content');
+          tabContents.forEach(content => content.classList.remove('active'));
+
+          // Show corresponding tab content
+          const tabId = tab.getAttribute('data-tab');
+          document.getElementById(`${tabId}-content`).classList.add('active');
+        });
+      });
+
+      // Animation for elements with animation classes
+      const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in');
+      animatedElements.forEach(el => {
+        setTimeout(() => {
+          el.style.opacity = '1';
+          el.style.transform = 'translateX(0) scale(1)';
+        }, parseInt(el.style.animationDelay || '0') * 1000);
+      });
+    });
+  </script>
+
+  <!--Footer Script-->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Back to top button functionality
+      const backToTopButton = document.getElementById('back-to-top');
+
+      // Show button after scrolling down 300px
+      window.addEventListener('scroll', function () {
+        if (window.pageYOffset > 300) {
+          backToTopButton.classList.add('visible');
+        } else {
+          backToTopButton.classList.remove('visible');
+        }
+      });
+
+      // Scroll to top when button is clicked
+      backToTopButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // Ensure animation classes are applied
+      const footerColumns = document.querySelectorAll('.footer-column');
+      footerColumns.forEach(column => {
+        column.style.opacity = '1';
+        column.style.transform = 'translateY(0)';
+      });
+
+      // Handle touch events for mobile
+      if ('ontouchstart' in window) {
+        // Disable hover effects that can cause issues on touch devices
+        document.documentElement.classList.add('touch-device');
+
+        // Add tap functionality to social links
+        const socialLinks = document.querySelectorAll('.social-link');
+        socialLinks.forEach(link => {
+          link.addEventListener('touchstart', function () {
+            this.classList.add('active');
+          });
+
+          link.addEventListener('touchend', function () {
+            setTimeout(() => {
+              this.classList.remove('active');
+            }, 300);
+          });
+        });
+      }
+
+      // Improve form submission on mobile
+      const newsletterForm = document.querySelector('.newsletter-form');
+      if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const emailInput = this.querySelector('.newsletter-input');
+
+          if (emailInput.value.trim() !== '') {
+            // Show success message
+            const successMessage = document.createElement('div');
+            successMessage.className = 'newsletter-success';
+            successMessage.style.color = '#2ecc71';
+            successMessage.style.fontSize = '14px';
+            successMessage.style.marginTop = '10px';
+            successMessage.textContent = 'Thank you for subscribing!';
+
+            // Insert after the form
+            this.parentNode.insertBefore(successMessage, this.nextSibling);
+
+            // Clear input
+            emailInput.value = '';
+
+            // Remove success message after 3 seconds
+            setTimeout(() => {
+              successMessage.remove();
+            }, 3000);
+          }
+        });
+      }
+
+      // Add responsive menu toggle for mobile
+      const quickLinks = document.querySelector('#quick-links');
+      if (quickLinks && window.innerWidth < 768) {
+        const heading = quickLinks.querySelector('h3');
+        const linksList = quickLinks.querySelector('ul');
+
+        // Initially hide the links on mobile
+        if (window.innerWidth < 768) {
+          linksList.style.display = 'none';
+          heading.style.cursor = 'pointer';
+
+          // Add toggle indicator
+          const toggleIndicator = document.createElement('span');
+          toggleIndicator.innerHTML = ' +';
+          toggleIndicator.style.float = 'right';
+          heading.appendChild(toggleIndicator);
+
+          // Toggle links visibility on click
+          heading.addEventListener('click', function () {
+            if (linksList.style.display === 'none') {
+              linksList.style.display = 'block';
+              toggleIndicator.innerHTML = ' -';
+            } else {
+              linksList.style.display = 'none';
+              toggleIndicator.innerHTML = ' +';
+            }
+          });
+        }
+      }
+
+      // Add intersection observer for animation
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+
+        // Observe footer columns
+        document.querySelectorAll('.footer-column').forEach(column => {
+          observer.observe(column);
+        });
+      }
+    });
+  </script>
+
+  <!--Header Scripting-->
+  <script>
+    // Variables
+    const header = document.querySelector('.header');
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    const overlay = document.querySelector('.overlay');
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50,);
+    });
+
+    // Mobile menu toggle
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Close mobile menu when clicking overlay
+    overlay.addEventListener('click', closeMenu);
+
+    // Mobile dropdown functionality
+    dropdowns.forEach(dropdown => {
+      const link = dropdown.querySelector('.nav-link');
+
+      link.addEventListener('click', (e) => {
+        if (window.innerWidth <= 992) {
+          e.preventDefault();
+
+          // Close other dropdowns
+          dropdowns.forEach(item => {
+            if (item !== dropdown) item.classList.remove('active');
+          });
+
+          dropdown.classList.toggle('active');
+        }
+      });
+    });
+
+    // Add event listeners to all dropdown links and nav items
+    document.querySelectorAll('.dropdown-link, .nav-item:not(.dropdown) .nav-link, .contact-btn')
+      .forEach(item => {
+        item.addEventListener('click', () => {
+          if (window.innerWidth <= 992) closeMenu();
+        });
+      });
+
+    // Set active link based on current page
+    function setActivePage() {
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.nav-link').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPage || (currentPage === 'index.html' && href === 'index.html')) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    // Function to close mobile menu
+    function closeMenu() {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+
+      // Close all dropdowns
+      dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 992) closeMenu();
+    });
+
+    // Initialize
+    setActivePage();
+  </script>
+
+</body>
+
+</html>
