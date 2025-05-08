@@ -1,0 +1,2186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vision</title>
+  <!--Hearder Styling-->
+  <style>
+    /* Base styles and reset */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #3d5a80;
+      --primary-light: #4f76a8;
+      --primary-dark: #2c4158;
+      --accent: #ee6c4d;
+      --light: #e0fbfc;
+      --dark: #293241;
+      --neutral: #98c1d9;
+      --header-height: 70px;
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Header container */
+    .header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+      transition: var(--transition);
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 clamp(1rem, 3vw, 2rem);
+      height: var(--header-height);
+      max-width: 1800px;
+      margin: 0 auto;
+      transition: var(--transition);
+    }
+
+    .header.scrolled .header-inner {
+      height: calc(var(--header-height) - 15px);
+    }
+
+    /* Logo styling */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: clamp(8px, 1.5vw, 12px);
+    }
+
+    .logo-image {
+      height: clamp(35px, 4vw, 45px);
+      width: clamp(35px, 4vw, 45px);
+      border-radius: 50%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .header.scrolled .logo-image {
+      height: clamp(30px, 3.5vw, 38px);
+      width: clamp(30px, 3.5vw, 38px);
+    }
+
+    .logo-text {
+      font-size: clamp(1rem, 1.5vw, 1.3rem);
+      font-weight: 600;
+      color: var(--primary);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .logo-text::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--accent);
+      transition: var(--transition);
+    }
+
+    .logo:hover .logo-text::after {
+      width: 100%;
+    }
+
+    /* Navigation menu */
+    .nav-menu {
+      display: flex;
+      gap: clamp(3px, 1vw, 5px);
+      align-items: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: clamp(3px, 1vw, 5px);
+      padding: clamp(6px, 1.5vw, 8px) clamp(8px, 2vw, 12px);
+      font-weight: 500;
+      font-size: clamp(0.8rem, 1.1vw, 1rem);
+      color: var(--dark);
+      border-radius: 6px;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--primary);
+      background-color: rgba(61, 90, 128, 0.08);
+    }
+
+    .nav-link.active {
+      color: var(--primary);
+      background-color: rgba(61, 90, 128, 0.12);
+    }
+
+    /* Dropdown menu */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      position: absolute;
+      top: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 200px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      pointer-events: none;
+    }
+
+    .dropdown:hover .dropdown-content {
+      opacity: 1;
+      visibility: visible;
+      top: 100%;
+      pointer-events: auto;
+    }
+
+    .dropdown-link {
+      display: block;
+      padding: 10px 18px;
+      transition: var(--transition);
+      border-left: 3px solid transparent;
+    }
+
+    .dropdown-link:hover {
+      background-color: rgba(61, 90, 128, 0.08);
+      color: var(--primary);
+      border-left-color: var(--accent);
+      padding-left: 22px;
+    }
+
+    /* Contact button */
+    .contact-btn {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: clamp(6px, 1.5vw, 9px) clamp(12px, 2.5vw, 18px);
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: clamp(0.8rem, 1.1vw, 1rem);
+      box-shadow: 0 4px 12px rgba(61, 90, 128, 0.3);
+      transition: var(--transition);
+      margin-left: clamp(4px, 1vw, 8px);
+      white-space: nowrap;
+    }
+
+    .contact-btn:hover {
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      transform: translateY(-2px);
+    }
+
+    /* Mobile hamburger menu */
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      width: clamp(24px, 3vw, 28px);
+      height: clamp(18px, 2.5vw, 20px);
+      position: relative;
+      z-index: 101;
+    }
+
+    .hamburger span {
+      display: block;
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      background: var(--primary);
+      border-radius: 3px;
+      opacity: 1;
+      left: 0;
+      transform: rotate(0deg);
+      transition: var(--transition);
+    }
+
+    .hamburger span:nth-child(1) {
+      top: 0px;
+    }
+
+    .hamburger span:nth-child(2) {
+      top: 8px;
+    }
+
+    .hamburger span:nth-child(3) {
+      top: 16px;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      top: 8px;
+      transform: rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      top: 8px;
+      transform: rotate(-45deg);
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      z-index: 99;
+      transition: var(--transition);
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 992px) {
+      .hamburger {
+        display: block;
+      }
+
+      .nav-menu {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        width: 100%;
+        height: calc(100vh - var(--header-height));
+        background-color: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 2rem;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+      }
+
+      .nav-menu.active {
+        transform: translateX(0);
+      }
+
+      .nav-item {
+        width: 100%;
+      }
+
+      .nav-link {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.1rem;
+      }
+
+      .contact-btn {
+        width: 100%;
+        text-align: center;
+        margin: 1rem 0;
+        padding: 1rem;
+      }
+
+      .dropdown-content {
+        position: static;
+        transform: none;
+        width: 100%;
+        box-shadow: none;
+        margin-top: 0.5rem;
+        padding-left: 1rem;
+      }
+
+      .dropdown-link {
+        padding: 0.8rem;
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-inner {
+        padding: 0 1rem;
+      }
+
+      .logo-text {
+        font-size: 1.1rem;
+      }
+
+      .nav-menu {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-inner {
+        padding: 0 0.8rem;
+      }
+
+      .logo-text {
+        font-size: 1rem;
+      }
+
+      .nav-menu {
+        padding: 1rem;
+      }
+
+      .nav-link {
+        padding: 0.8rem;
+        font-size: 1rem;
+      }
+    }
+  </style>
+
+  <!--Vision Styling-->
+  <style>
+    /* Main Content Styles - Vision & Philosophy */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .vision-philosophy-section {
+      padding: 100px 0 60px;
+      background-color: #f8f9fa;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-header h1 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    .section-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+
+    .section-divider span {
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: var(--dark);
+      font-style: italic;
+    }
+
+    /* Vision Section */
+    .vision-section {
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      margin-bottom: 60px;
+    }
+
+    .vision-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .vision-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+    }
+
+    .eye-icon::before {
+      content: "👁️";
+      font-size: 30px;
+      color: white;
+    }
+
+    .vision-header h2 {
+      font-size: 2rem;
+      color: var(--primary-dark);
+    }
+
+    .vision-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .vision-image {
+      flex: 1;
+      min-width: 300px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .vision-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .vision-image:hover img {
+      transform: scale(1.05);
+    }
+
+    .vision-text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .vision-statement {
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--primary);
+      margin-bottom: 25px;
+      padding-left: 20px;
+      border-left: 3px solid var(--accent);
+      line-height: 1.6;
+    }
+
+    .vision-list {
+      list-style: none;
+      margin-top: 20px;
+    }
+
+    .vision-list li {
+      display: flex;
+      align-items: baseline;
+      margin-bottom: 15px;
+    }
+
+    .list-marker {
+      color: var(--accent);
+      font-size: 1.2rem;
+      margin-right: 15px;
+      min-width: 20px;
+    }
+
+    /* Philosophy Cards */
+    .philosophy-section {
+      margin-bottom: 60px;
+    }
+
+    .philosophy-heading {
+      font-size: 2rem;
+      color: var(--primary-dark);
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .philosophy-intro {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 40px;
+      font-size: 1.1rem;
+    }
+
+    .philosophy-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    .philosophy-card {
+      background-color: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .philosophy-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      border-radius: 50%;
+      color: white;
+    }
+
+    .philosophy-card h3 {
+      font-size: 1.3rem;
+      color: var(--primary-dark);
+      margin-bottom: 15px;
+    }
+
+    .philosophy-card p {
+      color: var(--dark);
+      line-height: 1.7;
+    }
+
+    /* Core Values Section */
+    .core-values-section {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 15px;
+      padding: 50px;
+      color: white;
+      margin-bottom: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .values-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .values-header h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .values-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .value-item {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      transition: transform 0.3s ease;
+      min-width: 250px;
+      max-width: 100%;
+      flex-basis: calc(50% - 20px);
+    }
+
+    .value-item:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .value-circle {
+      width: 50px;
+      height: 50px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+
+    .value-text {
+      flex-grow: 1;
+    }
+
+    .value-text h3 {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+    }
+
+    .value-text p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    /* Educational Approach */
+    .educational-approach {
+      margin-bottom: 60px;
+    }
+
+    .educational-approach h2 {
+      font-size: 2rem;
+      color: var(--primary-dark);
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .approach-content>p {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 40px;
+      font-size: 1.1rem;
+    }
+
+    .approach-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    .approach-card {
+      background-color: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .approach-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .approach-image {
+      overflow: hidden;
+    }
+
+    .approach-image img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .approach-card:hover .approach-image img {
+      transform: scale(1.1);
+    }
+
+    .approach-text {
+      padding: 25px;
+    }
+
+    .approach-text h3 {
+      font-size: 1.3rem;
+      color: var(--primary-dark);
+      margin-bottom: 15px;
+    }
+
+    .approach-text p {
+      color: var(--dark);
+      line-height: 1.7;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+      .vision-philosophy-section {
+        padding: 80px 0 40px;
+      }
+
+      .vision-section {
+        padding: 30px;
+      }
+
+      .core-values-section {
+        padding: 40px 30px;
+      }
+
+      .philosophy-cards {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+
+      .approach-cards {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .section-header h1 {
+        font-size: 2rem;
+      }
+
+      .vision-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .vision-icon {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+
+      .values-container {
+        gap: 20px;
+      }
+
+      .value-item {
+        flex-basis: 100%;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .vision-philosophy-section {
+        padding: 60px 0 30px;
+      }
+
+      .section-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .philosophy-card,
+      .approach-card {
+        padding: 20px;
+      }
+
+      .philosophy-cards,
+      .approach-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .card-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+      }
+    }
+  </style>
+
+  <!--Footer Style-->
+  <style>
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Footer Styles */
+    footer {
+      background: #2c3e50;
+      color: #fff;
+      padding: 50px 0 0;
+      position: relative;
+      margin: 3rem 0 0 0;
+
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to right, #3498db, #2ecc71, #f1c40f, #e74c3c);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+
+    /* Footer Column Card Style */
+    .footer-column {
+      flex: 1;
+      min-width: 240px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s forwards;
+    }
+
+    .footer-column:hover {
+      transform: translateY(-10px);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Set different animation delays for each column */
+    .footer-column:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .footer-column:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+
+    .footer-column:nth-child(3) {
+      animation-delay: 0.5s;
+    }
+
+    .footer-column:nth-child(4) {
+      animation-delay: 0.7s;
+    }
+
+    .footer-column h3 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+      display: inline-block;
+    }
+
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 3px;
+      background: #3498db;
+      transition: width 0.3s ease;
+    }
+
+    .footer-column:hover h3::after {
+      width: 100%;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 15px;
+      position: relative;
+      padding-left: 25px;
+      transition: transform 0.3s ease;
+    }
+
+    .footer-column ul li:hover {
+      transform: translateX(5px);
+    }
+
+    /* Icons for contact information */
+    .footer-column#contact-us ul li::before {
+      font-family: sans-serif;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .footer-column#contact-us ul li:nth-child(1)::before {
+      content: '📍';
+    }
+
+    .footer-column#contact-us ul li:nth-child(2)::before {
+      content: '📞';
+    }
+
+    .footer-column#contact-us ul li:nth-child(3)::before {
+      content: '✉️';
+    }
+
+    /* Icons for school hours */
+    .footer-column#school-hours ul li::before {
+      font-family: sans-serif;
+      position: absolute;
+      left: 0;
+      top: 0;
+      content: '🕒';
+    }
+
+    /* Quick links styling */
+    .footer-column ul li a {
+      color: #ecf0f1;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      position: relative;
+      padding-left: 15px;
+    }
+
+    .footer-column ul li a::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #3498db;
+      font-size: 18px;
+      transition: transform 0.3s ease;
+    }
+
+    .footer-column ul li a:hover {
+      color: #3498db;
+    }
+
+    .footer-column ul li a:hover::before {
+      transform: translateY(-50%) translateX(5px);
+    }
+
+    /* Social Links */
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #3498db;
+      border-radius: 50%;
+      transform: scale(0);
+      transition: transform 0.3s ease;
+      z-index: -1;
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px);
+      color: #fff;
+    }
+
+    .social-link:hover::before {
+      transform: scale(1);
+    }
+
+    /* Facebook */
+    .social-link.facebook:hover::before {
+      background: #1877f2;
+    }
+
+    /* Twitter */
+    .social-link.twitter:hover::before {
+      background: #1da1f2;
+    }
+
+    /* Instagram */
+    .social-link.instagram:hover::before {
+      background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+    }
+
+    /* YouTube */
+    .social-link.youtube:hover::before {
+      background: #ff0000;
+    }
+
+    /* Newsletter Form */
+    .newsletter-form {
+      display: flex;
+      margin-top: 15px;
+      overflow: hidden;
+      border-radius: 5px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .newsletter-input {
+      flex: 1;
+      border: none;
+      padding: 12px 15px;
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .newsletter-input:focus {
+      outline: none;
+    }
+
+    .newsletter-button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 0 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .newsletter-button:hover {
+      background: #2980b9;
+    }
+
+    /* Copyright Section */
+    .copyright {
+      background: rgba(0, 0, 0, 0.2);
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 20px;
+      position: relative;
+    }
+
+    .copyright::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .copyright p {
+      font-size: 14px;
+      color: #bdc3c7;
+    }
+
+    /* Back to top button */
+    .back-to-top {
+      position: absolute;
+      right: 20px;
+      bottom: 70px;
+      width: 50px;
+      height: 50px;
+      background: #3498db;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      text-decoration: none;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: #2980b9;
+      transform: translateY(-5px);
+    }
+
+    .back-to-top::before {
+      content: '↑';
+      font-size: 24px;
+    }
+
+    /* Animation Keyframes */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Footer Logo */
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .footer-logo-icon {
+      width: 40px;
+      height: 40px;
+      background: #3498db;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    /* Map container */
+    .map-container {
+      height: 150px;
+      width: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      position: relative;
+      background: #ecf0f1;
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: url('/api/placeholder/600/300') center/cover;
+      position: relative;
+    }
+
+    .map-placeholder::after {
+      content: 'View on Google Maps';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(52, 152, 219, 0.9);
+      color: white;
+      padding: 5px;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    /* Pulsing dot for location */
+    .location-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+      background: #e74c3c;
+      border-radius: 50%;
+    }
+
+    .location-dot::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(231, 76, 60, 0.6);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(3);
+        opacity: 0;
+      }
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+      .footer-container {
+        justify-content: flex-start;
+      }
+
+      .footer-column {
+        min-width: 320px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .footer-column {
+        min-width: 100%;
+      }
+
+      .back-to-top {
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+  </style>
+  <!-- Chat Bot Widget Style -->
+  <style>
+    .chat-widget {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .chat-button {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #1a237e;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .chat-button:hover {
+      transform: scale(1.1);
+    }
+
+    .chat-window {
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 350px;
+      height: 450px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-window.active {
+      display: flex;
+    }
+
+    .chat-header {
+      background-color: #1a237e;
+      color: white;
+      padding: 15px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .close-chat {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .chat-body {
+      padding: 15px;
+      height: 300px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-message {
+      margin-bottom: 15px;
+      max-width: 80%;
+      padding: 10px 15px;
+      border-radius: 20px;
+      word-wrap: break-word;
+    }
+
+    .bot-message {
+      background-color: #f1f1f1;
+      align-self: flex-start;
+      border-bottom-left-radius: 5px;
+    }
+
+    .user-message {
+      background-color: #1a237e;
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 5px;
+    }
+
+    .chat-input-container {
+      padding: 10px;
+      border-top: 1px solid #eee;
+      display: flex;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      outline: none;
+    }
+
+    .send-button {
+      background-color: #1a237e;
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-left: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chat-form {
+      padding: 15px;
+      border-top: 1px solid #eee;
+      display: none;
+    }
+
+    .chat-form.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .submit-chat-form {
+      background-color: #1a237e;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .typing-indicator {
+      display: none;
+      background-color: #f1f0f0;
+      padding: 8px 15px;
+      border-radius: 18px;
+      margin-bottom: 10px;
+      align-self: flex-start;
+      margin-top: 5px;
+    }
+
+    .typing-indicator.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .typing-indicator span {
+      height: 8px;
+      width: 8px;
+      margin: 0 2px;
+      background-color: #999;
+      border-radius: 50%;
+      display: inline-block;
+      animation: bounce 1.3s linear infinite;
+    }
+
+    .typing-indicator span:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .typing-indicator span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-indicator span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0);
+      }
+
+      30% {
+        transform: translateY(-4px);
+      }
+    }
+  </style>
+  <!-- Back to top button styles -->
+  <style>
+    #back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 90px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #333;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s, visibility 0.3s;
+      visibility: hidden;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+    }
+
+    #back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @media (max-width: 768px) {
+      #back-to-top {
+        bottom: 90px;
+        right: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Improved Header with Navigation -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img class="logo-image"
+          src="https://img.freepik.com/free-vector/gradient-high-school-logo-design_23-2149626932.jpg"
+          alt="Spring Wood School Logo">
+        <span class="logo-text">Spring Wood School</span>
+      </a>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item dropdown">
+          <a href="index.html#about" class="nav-link">
+            About Us
+            <i>▾</i>
+          </a>
+          <div class="dropdown-content">
+            <a href="about_School.html" class="dropdown-link">About School</a>
+            <a href="founder_Chairman.html" class="dropdown-link">Founder Chairman</a>
+            <a href="vision_phy.html" class="dropdown-link active">Vision and Philosophy</a>
+            <a href="why_us.html" class="dropdown-link">Why Choose Us</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="index.html#academics" class="nav-link">
+            Academics
+            <i>▾</i>
+          </a>
+          <div class="dropdown-content">
+            <a href="curriculum.html" class="dropdown-link">Curriculum</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="index.html#school-life" class="nav-link">
+            School Life
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="index.html#facilities" class="nav-link">
+            Facilities
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="index.html#advantages" class="nav-link">Advantages</a>
+        </li>
+        <li class="nav-item">
+          <a href="index.html#gallery" class="nav-link">Photo Gallery</a>
+        </li>
+        <li class="nav-item">
+          <a href="index.html#admission" class="nav-link">Admission</a>
+        </li>
+        <li class="nav-item">
+          <a href="index.html#contact_us_link" class="contact-btn">Contact Us</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+  <div class="overlay"></div>
+
+
+  <!-- Main Content: Vision and Philosophy -->
+  <section class="vision-philosophy-section">
+    <div class="container">
+      <div class="section-header">
+        <h1>Our Vision & Philosophy</h1>
+        <div class="section-divider">
+          <span></span>
+        </div>
+        <p class="section-subtitle">Nurturing minds, building character, preparing leaders</p>
+      </div>
+
+      <!-- Vision Section -->
+      <div class="vision-section">
+        <div class="vision-header">
+          <div class="vision-icon">
+            <i class="eye-icon"></i>
+          </div>
+          <h2>Our Vision</h2>
+        </div>
+
+        <div class="vision-content">
+          <div class="vision-image">
+            <img src="/api/placeholder/600/400" alt="Vision Image">
+          </div>
+          <div class="vision-text">
+            <p class="vision-statement">"To be a premier educational institution that empowers students to become
+              lifelong learners and responsible global citizens."</p>
+            <p>At Spring Wood School, we envision creating an educational environment where:</p>
+            <ul class="vision-list">
+              <li>
+                <span class="list-marker">✧</span>
+                <span>Every student realizes their full potential and excels academically, socially, and
+                  emotionally</span>
+              </li>
+              <li>
+                <span class="list-marker">✧</span>
+                <span>Innovation and critical thinking are fostered through experiential learning</span>
+              </li>
+              <li>
+                <span class="list-marker">✧</span>
+                <span>Cultural diversity is celebrated and global awareness is promoted</span>
+              </li>
+              <li>
+                <span class="list-marker">✧</span>
+                <span>Character development and ethical values form the foundation of education</span>
+              </li>
+              <li>
+                <span class="list-marker">✧</span>
+                <span>Students develop the skills and mindset needed to thrive in a rapidly changing world</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Philosophy Cards -->
+      <div class="philosophy-section">
+        <h2 class="philosophy-heading">Our Educational Philosophy</h2>
+        <p class="philosophy-intro">Our philosophy is built on six fundamental pillars that guide our approach to
+          education:</p>
+
+        <div class="philosophy-cards">
+          <div class="philosophy-card">
+            <div class="card-icon">🧠</div>
+            <h3>Holistic Development</h3>
+            <p>We believe in nurturing the intellectual, physical, emotional, and social dimensions of every child. Our
+              curriculum goes beyond academics to include sports, arts, and character education.</p>
+          </div>
+
+          <div class="philosophy-card">
+            <div class="card-icon">🔍</div>
+            <h3>Inquiry-Based Learning</h3>
+            <p>We encourage students to ask questions, explore ideas, and discover knowledge through hands-on
+              experiences rather than passive learning, fostering curiosity and critical thinking.</p>
+          </div>
+
+          <div class="philosophy-card">
+            <div class="card-icon">🌎</div>
+            <h3>Global Citizenship</h3>
+            <p>We prepare students to be responsible global citizens who understand diverse cultures, respect
+              differences, and are committed to making positive contributions to society.</p>
+          </div>
+
+          <div class="philosophy-card">
+            <div class="card-icon">🤝</div>
+            <h3>Collaborative Community</h3>
+            <p>We foster a supportive community where students, teachers, parents, and administrators work together to
+              create an optimal learning environment.</p>
+          </div>
+
+          <div class="philosophy-card">
+            <div class="card-icon">💡</div>
+            <h3>Innovation & Creativity</h3>
+            <p>We value creative expression and innovative thinking, encouraging students to develop original ideas and
+              solutions to complex problems.</p>
+          </div>
+
+          <div class="philosophy-card">
+            <div class="card-icon">🌱</div>
+            <h3>Lifelong Learning</h3>
+            <p>We instill a passion for continuous learning, equipping students with the skills to adapt to new
+              challenges and opportunities throughout their lives.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Values -->
+      <div class="core-values-section">
+        <div class="values-header">
+          <h2>Our Core Values</h2>
+          <p>These values guide everything we do at Spring Wood School</p>
+        </div>
+
+        <div class="values-container">
+          <div class="value-item">
+            <div class="value-circle">
+              <span>E</span>
+            </div>
+            <div class="value-text">
+              <h3>Excellence</h3>
+              <p>We strive for excellence in all endeavors, encouraging students to set high standards and pursue their
+                best.</p>
+            </div>
+          </div>
+
+          <div class="value-item">
+            <div class="value-circle">
+              <span>R</span>
+            </div>
+            <div class="value-text">
+              <h3>Respect</h3>
+              <p>We foster respect for self, others, and the environment, recognizing the dignity and worth of every
+                individual.</p>
+            </div>
+          </div>
+
+          <div class="value-item">
+            <div class="value-circle">
+              <span>I</span>
+            </div>
+            <div class="value-text">
+              <h3>Integrity</h3>
+              <p>We uphold honesty, moral principles, and ethical behavior in all aspects of school life.</p>
+            </div>
+          </div>
+
+          <div class="value-item">
+            <div class="value-circle">
+              <span>C</span>
+            </div>
+            <div class="value-text">
+              <h3>Compassion</h3>
+              <p>We nurture empathy and kindness, teaching students to care for others and contribute positively to
+                their communities.</p>
+            </div>
+          </div>
+
+          <div class="value-item">
+            <div class="value-circle">
+              <span>R</span>
+            </div>
+            <div class="value-text">
+              <h3>Responsibility</h3>
+              <p>We encourage students to take ownership of their actions, decisions, and learning journey.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Educational Approach -->
+      <div class="educational-approach">
+        <h2>Our Educational Approach</h2>
+        <div class="approach-content">
+          <p>At Spring Wood School, we implement our philosophy through a balanced approach that combines:</p>
+
+          <div class="approach-cards">
+            <div class="approach-card">
+              <div class="approach-image">
+                <img src="/api/placeholder/400/300" alt="Student-Centered Learning">
+              </div>
+              <div class="approach-text">
+                <h3>Student-Centered Learning</h3>
+                <p>Our approach places students at the center of the learning process, adapting to individual learning
+                  styles and paces to ensure every child succeeds.</p>
+              </div>
+            </div>
+
+            <div class="approach-card">
+              <div class="approach-image">
+                <img src="/api/placeholder/400/300" alt="Technology Integration">
+              </div>
+              <div class="approach-text">
+                <h3>Technology Integration</h3>
+                <p>We integrate modern technology into our teaching methodologies, preparing students for a digital
+                  future while enhancing learning experiences.</p>
+              </div>
+            </div>
+
+            <div class="approach-card">
+              <div class="approach-image">
+                <img src="/api/placeholder/400/300" alt="Real-World Connections">
+              </div>
+              <div class="approach-text">
+                <h3>Real-World Connections</h3>
+                <p>We connect classroom learning to real-world contexts through field trips, guest speakers, and
+                  community projects that make learning meaningful and relevant.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- Footer -->
+  <footer id="contact_us_link">
+    <div class="container-for-footer">
+      <div class="footer-container">
+        <!-- About School - Moved to first for mobile priority -->
+        <div class="footer-column" id="about-school">
+          <div class="footer-logo">
+            <div class="footer-logo-icon">SW</div>
+            <h4>Spring Wood School</h4>
+          </div>
+          <p>Nurturing minds, building character, and preparing leaders of tomorrow since 1985.</p>
+
+          <h4 style="margin-top: 20px; font-size: 16px;">Stay Connected</h4>
+          <div class="social-links">
+            <a href="#" class="social-link facebook" aria-label="Facebook">FB</a>
+            <a href="#" class="social-link twitter" aria-label="Twitter">TW</a>
+            <a href="#" class="social-link instagram" aria-label="Instagram">IG</a>
+            <a href="#" class="social-link youtube" aria-label="YouTube">YT</a>
+          </div>
+
+          <h4 style="margin-top: 20px; font-size: 16px;">Subscribe to Newsletter</h4>
+          <form class="newsletter-form">
+            <input type="email" class="newsletter-input" placeholder="Your email address" required
+              aria-label="Email for newsletter">
+            <button type="submit" class="newsletter-button" aria-label="Subscribe">→</button>
+          </form>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-column" id="quick-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#academics">Academics</a></li>
+            <li><a href="#school-life">School Life</a></li>
+            <li><a href="#facilities">Facilities</a></li>
+            <li><a href="#admission">Admission</a></li>
+            <li><a href="#advantages">Advantages</a></li>
+            <li><a href="#gallery">Photo Gallery</a></li>
+          </ul>
+        </div>
+
+        <!-- School Hours -->
+        <div class="footer-column" id="school-hours">
+          <h3>School Hours</h3>
+          <ul>
+            <li>Monday - Friday: 8:00 AM - 3:30 PM</li>
+            <li>Saturday: 8:00 AM - 12:30 PM (Activities)</li>
+            <li>Admin Office: 8:00 AM - 5:00 PM</li>
+          </ul>
+
+          <div style="margin-top: 20px; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 15px;">
+            <h4 style="margin-bottom: 10px; font-size: 16px;">Important Dates</h4>
+            <p style="font-size: 14px; margin-bottom: 5px;">📅 Summer Break: May 15 - June 15</p>
+            <p style="font-size: 14px; margin-bottom: 5px;">📅 Next Term Begins: July 1st</p>
+            <p style="font-size: 14px;">📅 Annual Day: December 10</p>
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="footer-column" id="contact-us">
+          <h3>Contact Us</h3>
+          <ul>
+            <li>13-44/1, Sri Vidhya Twp, Annapurna Colony, Badangpet, Telangana 500058</li>
+            <li>Phone: <a href="tel:6300565660" style="color: #ecf0f1; text-decoration: none;">6300565660</a></li>
+            <li>Email: <a href="mailto:info@SpringWoodschool.edu"
+                style="color: #ecf0f1; text-decoration: none;">info@SpringWoodschool.edu</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <a href="#" class="back-to-top" id="back-to-top" aria-label="Back to Top"></a>
+
+      <div class="copyright">
+        <p>&copy; 2025 Spring Wood School. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--Footer Script-->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Back to top button functionality
+      const backToTopButton = document.getElementById('back-to-top');
+
+      // Show button after scrolling down 300px
+      window.addEventListener('scroll', function () {
+        if (window.pageYOffset > 300) {
+          backToTopButton.classList.add('visible');
+        } else {
+          backToTopButton.classList.remove('visible');
+        }
+      });
+
+      // Scroll to top when button is clicked
+      backToTopButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // Ensure animation classes are applied
+      const footerColumns = document.querySelectorAll('.footer-column');
+      footerColumns.forEach(column => {
+        column.style.opacity = '1';
+        column.style.transform = 'translateY(0)';
+      });
+
+      // Handle touch events for mobile
+      if ('ontouchstart' in window) {
+        // Disable hover effects that can cause issues on touch devices
+        document.documentElement.classList.add('touch-device');
+
+        // Add tap functionality to social links
+        const socialLinks = document.querySelectorAll('.social-link');
+        socialLinks.forEach(link => {
+          link.addEventListener('touchstart', function () {
+            this.classList.add('active');
+          });
+
+          link.addEventListener('touchend', function () {
+            setTimeout(() => {
+              this.classList.remove('active');
+            }, 300);
+          });
+        });
+      }
+
+      // Improve form submission on mobile
+      const newsletterForm = document.querySelector('.newsletter-form');
+      if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const emailInput = this.querySelector('.newsletter-input');
+
+          if (emailInput.value.trim() !== '') {
+            // Show success message
+            const successMessage = document.createElement('div');
+            successMessage.className = 'newsletter-success';
+            successMessage.style.color = '#2ecc71';
+            successMessage.style.fontSize = '14px';
+            successMessage.style.marginTop = '10px';
+            successMessage.textContent = 'Thank you for subscribing!';
+
+            // Insert after the form
+            this.parentNode.insertBefore(successMessage, this.nextSibling);
+
+            // Clear input
+            emailInput.value = '';
+
+            // Remove success message after 3 seconds
+            setTimeout(() => {
+              successMessage.remove();
+            }, 3000);
+          }
+        });
+      }
+
+      // Add responsive menu toggle for mobile
+      const quickLinks = document.querySelector('#quick-links');
+      if (quickLinks && window.innerWidth < 768) {
+        const heading = quickLinks.querySelector('h3');
+        const linksList = quickLinks.querySelector('ul');
+
+        // Initially hide the links on mobile
+        if (window.innerWidth < 768) {
+          linksList.style.display = 'none';
+          heading.style.cursor = 'pointer';
+
+        }
+      }
+
+      // Add intersection observer for animation
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+
+        // Observe footer columns
+        document.querySelectorAll('.footer-column').forEach(column => {
+          observer.observe(column);
+        });
+      }
+    });
+  </script>
+
+  <!--Header Scripting-->
+  <script>
+    // Variables
+    const header = document.querySelector('.header');
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    const overlay = document.querySelector('.overlay');
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50,);
+    });
+
+    // Mobile menu toggle
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Close mobile menu when clicking overlay
+    overlay.addEventListener('click', closeMenu);
+
+    // Mobile dropdown functionality
+    dropdowns.forEach(dropdown => {
+      const link = dropdown.querySelector('.nav-link');
+
+      link.addEventListener('click', (e) => {
+        if (window.innerWidth <= 992) {
+          e.preventDefault();
+
+          // Close other dropdowns
+          dropdowns.forEach(item => {
+            if (item !== dropdown) item.classList.remove('active');
+          });
+
+          dropdown.classList.toggle('active');
+        }
+      });
+    });
+
+    // Add event listeners to all dropdown links and nav items
+    document.querySelectorAll('.dropdown-link, .nav-item:not(.dropdown) .nav-link, .contact-btn')
+      .forEach(item => {
+        item.addEventListener('click', () => {
+          if (window.innerWidth <= 992) closeMenu();
+        });
+      });
+
+    // Set active link based on current page
+    function setActivePage() {
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.nav-link').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPage || (currentPage === 'index.html' && href === 'index.html')) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    // Function to close mobile menu
+    function closeMenu() {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+
+      // Close all dropdowns
+      dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 992) closeMenu();
+    });
+
+    // Initialize
+    setActivePage();
+  </script>
+  <!-- Chat Bot Widget HTML -->
+  <div class="chat-widget">
+    <div class="chat-button" id="chat-button">💬</div>
+    <div class="chat-window" id="chat-window">
+      <div class="chat-header">
+        <span>Chat Assistance</span>
+        <button class="close-chat" id="close-chat">×</button>
+      </div>
+      <div class="chat-body" id="chat-body">
+        <div class="typing-indicator" id="typing-indicator">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="chat-input-container">
+        <input type="text" class="chat-input" id="chat-input" placeholder="Type your message..." />
+        <button class="send-button" id="send-button">➤</button>
+      </div>
+      <div class="chat-form" id="chat-form">
+        <div class="form-group">
+          <label for="chat-name">Name</label>
+          <input type="text" id="chat-name" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="chat-place">Place</label>
+          <input type="text" id="chat-place" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="chat-mobile">Mobile Number</label>
+          <input type="tel" id="chat-mobile" class="form-control" required />
+        </div>
+        <button type="button" class="submit-chat-form" id="submit-chat-form">Submit</button>
+      </div>
+    </div>
+  </div>
+  <!-- Back to top button HTML -->
+  <button id="back-to-top" title="Back to top"><!-- ↑ --></button>
+  <!-- Chat Bot and Back-to-Top JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Back to top button functionality
+      const backToTopButton = document.getElementById('back-to-top');
+      window.addEventListener('scroll', function () {
+        if (window.pageYOffset > 300) {
+          backToTopButton.classList.add('visible');
+        } else {
+          backToTopButton.classList.remove('visible');
+        }
+      });
+      backToTopButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      // Chat Bot Functionality
+      const chatButton = document.getElementById("chat-button");
+      const chatWindow = document.getElementById("chat-window");
+      const closeChat = document.getElementById("close-chat");
+      const chatBody = document.getElementById("chat-body");
+      const chatInput = document.getElementById("chat-input");
+      const sendButton = document.getElementById("send-button");
+      const chatForm = document.getElementById("chat-form");
+      const typingIndicator = document.getElementById("typing-indicator");
+      function adjustBackToTopPosition() {
+        if (chatWindow.classList.contains('active') && window.innerWidth <= 768) {
+          backToTopButton.style.bottom = '300px';
+        } else {
+          backToTopButton.style.bottom = window.innerWidth <= 768 ? '90px' : '20px';
+        }
+      }
+      chatButton.addEventListener("click", function () {
+        chatWindow.classList.toggle("active");
+        adjustBackToTopPosition();
+        if (chatWindow.classList.contains("active") && chatBody.children.length === 1) {
+          setTimeout(() => { sendBotMessage(chatSteps[0].message); }, 500);
+        }
+      });
+      closeChat.addEventListener("click", function () {
+        chatWindow.classList.remove("active");
+        adjustBackToTopPosition();
+      });
+      window.addEventListener('resize', adjustBackToTopPosition);
+      adjustBackToTopPosition();
+      let currentStep = 0;
+      let userData = { name: "", place: "", mobile: "", };
+      const chatSteps = [
+        { message: "Hi there! How can I help you with Spring Wood School?", expectResponse: true, processResponse: (response) => { return "Great! I'd like to get to know you better to provide personalized assistance. Could you please tell me your name?"; }, },
+        { message: "Could you please tell me your name?", expectResponse: true, processResponse: (response) => { userData.name = response; return `Nice to meet you, ${userData.name}! Where are you from?`; }, },
+        { message: "Where are you from?", expectResponse: true, processResponse: (response) => { userData.place = response; return "Thanks! Could you please share your mobile number so that our admission team can contact you?"; }, },
+        { message: "Could you please share your mobile number?", expectResponse: true, processResponse: (response) => { userData.mobile = response; return `Thank you ${userData.name}! Our admission team will contact you soon at ${userData.mobile}. Meanwhile, feel free to explore our website or ask me any questions about Spring Wood School!`; }, },
+      ];
+      function sendUserMessage() {
+        const message = chatInput.value.trim();
+        if (message === "") return;
+        const userMessageElement = document.createElement("div");
+        userMessageElement.classList.add("chat-message", "user-message");
+        userMessageElement.textContent = message;
+        chatBody.appendChild(userMessageElement);
+        chatInput.value = "";
+        chatBody.scrollTop = chatBody.scrollHeight;
+        showTypingIndicator();
+        setTimeout(() => {
+          hideTypingIndicator();
+          if (currentStep < chatSteps.length && chatSteps[currentStep].expectResponse) {
+            const nextMessage = chatSteps[currentStep].processResponse(message);
+            currentStep++;
+            if (nextMessage) { sendBotMessage(nextMessage); }
+          }
+        }, 1000);
+      }
+      function sendBotMessage(message) {
+        hideTypingIndicator();
+        const botMessageElement = document.createElement("div");
+        botMessageElement.classList.add("chat-message", "bot-message");
+        botMessageElement.textContent = message;
+        chatBody.appendChild(botMessageElement);
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }
+      function showTypingIndicator() {
+        if (typingIndicator.parentNode === chatBody) { chatBody.removeChild(typingIndicator); }
+        chatBody.appendChild(typingIndicator);
+        typingIndicator.classList.add("active");
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }
+      function hideTypingIndicator() { typingIndicator.classList.remove("active"); }
+      sendButton.addEventListener("click", function () { sendUserMessage(); });
+      chatInput.addEventListener("keypress", function (e) { if (e.key === "Enter") { sendUserMessage(); } });
+    });
+  </script>
+</body>
+
+</html>

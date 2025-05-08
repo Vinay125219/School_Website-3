@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chairman</title>
+  <!--Hearder Styling-->
+  <style>
+    /* Base styles and reset */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #3d5a80;
+      --primary-light: #4f76a8;
+      --primary-dark: #2c4158;
+      --accent: #ee6c4d;
+      --light: #e0fbfc;
+      --dark: #293241;
+      --neutral: #98c1d9;
+      --header-height: 70px;
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Header container */
+    .header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+      transition: var(--transition);
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      height: var(--header-height);
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+      transition: var(--transition);
+      max-width: 1800px;
+      margin: 0 auto;
+    }
+
+    .header.scrolled .header-inner {
+      height: calc(var(--header-height) - 15px);
+    }
+
+    /* Logo styling */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-image {
+      height: 45px;
+      width: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .header.scrolled .logo-image {
+      height: 38px;
+      width: 38px;
+    }
+
+    .logo-text {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .logo-text::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--accent);
+      transition: var(--transition);
+    }
+
+    .logo:hover .logo-text::after {
+      width: 100%;
+    }
+
+    /* Navigation menu */
+    .nav-menu {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 12px;
+      font-weight: 500;
+      color: var(--dark);
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+
+    .nav-link:hover {
+      color: var(--primary);
+      background-color: rgba(61, 90, 128, 0.08);
+    }
+
+    .nav-link.active {
+      color: var(--primary);
+      background-color: rgba(61, 90, 128, 0.12);
+    }
+
+    /* Dropdown menu */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      position: absolute;
+      top: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 200px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      pointer-events: none;
+    }
+
+    .dropdown:hover .dropdown-content {
+      opacity: 1;
+      visibility: visible;
+      top: 100%;
+      pointer-events: auto;
+    }
+
+    .dropdown-link {
+      display: block;
+      padding: 10px 18px;
+      transition: var(--transition);
+      border-left: 3px solid transparent;
+    }
+
+    .dropdown-link:hover {
+      background-color: rgba(61, 90, 128, 0.08);
+      color: var(--primary);
+      border-left-color: var(--accent);
+      padding-left: 22px;
+    }
+
+    /* Contact button */
+    .contact-btn {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 9px 18px;
+      border-radius: 50px;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(61, 90, 128, 0.3);
+      transition: var(--transition);
+      margin-left: 8px;
+    }
+
+    .contact-btn:hover {
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      transform: translateY(-2px);
+    }
+
+    /* Mobile hamburger menu */
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      width: 28px;
+      height: 20px;
+      position: relative;
+      z-index: 101;
+    }
+
+    .hamburger span {
+      display: block;
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      background: var(--primary);
+      border-radius: 3px;
+      opacity: 1;
+      left: 0;
+      transform: rotate(0deg);
+      transition: var(--transition);
+    }
+
+    .hamburger span:nth-child(1) {
+      top: 0px;
+    }
+
+    .hamburger span:nth-child(2) {
+      top: 8px;
+    }
+
+    .hamburger span:nth-child(3) {
+      top: 16px;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      top: 8px;
+      transform: rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      top: 8px;
+      transform: rotate(-45deg);
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      z-index: 99;
+      transition: var(--transition);
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 1100px) {
+      .nav-link {
+        padding: 8px 10px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .hamburger {
+        display: block;
+      }
+
+      .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        width: 280px;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        gap: 0;
+        padding-top: 80px;
+        box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+        align-items: flex-start;
+        overflow-y: auto;
+        z-index: 100;
+      }
+
+      .nav-menu.active {
+        right: 0;
+      }
+
+      .nav-item {
+        width: 100%;
+      }
+
+      .nav-link {
+        padding: 15px 25px;
+        border-radius: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        justify-content: space-between;
+      }
+
+      .dropdown-content {
+        position: static;
+        opacity: 1;
+        visibility: hidden;
+        max-height: 0;
+        box-shadow: none;
+        transform: none;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        width: 100%;
+        background-color: rgba(61, 90, 128, 0.04);
+      }
+
+      .dropdown.active .dropdown-content {
+        visibility: visible;
+        max-height: 500px;
+      }
+
+      .dropdown-link {
+        padding-left: 40px;
+      }
+
+      .dropdown-link:hover {
+        padding-left: 45px;
+      }
+
+      .contact-btn {
+        margin: 15px 25px;
+        text-align: center;
+        display: block;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .header-inner {
+        padding: 0 1rem;
+      }
+
+      .logo-text {
+        font-size: 1.1rem;
+      }
+
+      .logo-image {
+        height: 38px;
+        width: 38px;
+      }
+
+      .header.scrolled .logo-image {
+        height: 34px;
+        width: 34px;
+      }
+    }
+  </style>
+
+  <!--Founder Styling-->
+  <style>
+    /* Main Content Styles - Founder Chairman */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .founder-chairman-section {
+      padding: 100px 0 60px;
+      background-color: #f8f9fa;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-header h1 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    .section-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .section-divider span {
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+
+    .chairman-profile {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-bottom: 60px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      background-color: #fff;
+      overflow: hidden;
+    }
+
+    .chairman-image {
+      flex: 1;
+      min-width: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chairman-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .chairman-image:hover img {
+      transform: scale(1.05);
+    }
+
+    .chairman-social {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 15px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+      background: var(--accent);
+      transform: translateY(-5px);
+    }
+
+    .linkedin-icon::before {
+      content: "in";
+      font-weight: bold;
+    }
+
+    .twitter-icon::before {
+      content: "tw";
+      font-weight: bold;
+    }
+
+    .chairman-details {
+      flex: 2;
+      min-width: 300px;
+      padding: 40px;
+    }
+
+    .chairman-details h2 {
+      font-size: 2rem;
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+    }
+
+    .designation {
+      font-size: 1.2rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .quotes {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--primary);
+      padding-left: 20px;
+      border-left: 3px solid var(--accent);
+      margin-bottom: 25px;
+    }
+
+    .chairman-info p {
+      margin-bottom: 15px;
+      line-height: 1.7;
+    }
+
+    .chairman-accomplishments {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .accomplishment-card {
+      background-color: #fff;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .accomplishment-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .accomplishment-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      border-radius: 50%;
+      color: white;
+    }
+
+    .accomplishment-card h3 {
+      font-size: 1.3rem;
+      color: var(--primary-dark);
+      margin-bottom: 15px;
+    }
+
+    .accomplishment-card ul {
+      list-style-position: inside;
+      padding-left: 10px;
+    }
+
+    .accomplishment-card ul li {
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+
+    .chairman-quote-box {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 15px;
+      padding: 50px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      color: white;
+      margin-bottom: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chairman-quote-box::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      font-size: 12rem;
+      color: rgba(255, 255, 255, 0.1);
+      font-family: Georgia, serif;
+    }
+
+    .quote-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .quote-content p {
+      font-size: 1.4rem;
+      line-height: 1.8;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    .quote-author p {
+      font-size: 1.1rem;
+      text-align: right;
+      font-weight: 500;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+      .founder-chairman-section {
+        padding: 80px 0 40px;
+      }
+
+      .chairman-details {
+        padding: 30px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .section-header h1 {
+        font-size: 2rem;
+      }
+
+      .chairman-quote-box {
+        padding: 30px;
+      }
+
+      .quote-content p {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .founder-chairman-section {
+        padding: 70px 0 30px;
+      }
+
+      .chairman-details h2 {
+        font-size: 1.7rem;
+      }
+
+      .designation {
+        font-size: 1.1rem;
+      }
+
+      .accomplishment-card {
+        padding: 20px;
+      }
+    }
+  </style>
+
+  <!--Footer Style-->
+  <style>
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Footer Styles */
+    footer {
+      background: #2c3e50;
+      color: #fff;
+      padding: 50px 0 0;
+      position: relative;
+      margin: 3rem 0 0 0;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to right, #3498db, #2ecc71, #f1c40f, #e74c3c);
+    }
+
+    .container-for-footer {
+      width: 100%;
+      max-width: 1525px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+
+    /* Footer Column Card Style */
+    .footer-column {
+      flex: 1;
+      min-width: 240px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s forwards;
+    }
+
+    .footer-column:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Set different animation delays for each column */
+    .footer-column:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .footer-column:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+
+    .footer-column:nth-child(3) {
+      animation-delay: 0.5s;
+    }
+
+    .footer-column:nth-child(4) {
+      animation-delay: 0.7s;
+    }
+
+    .footer-column h3 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+      display: inline-block;
+    }
+
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 3px;
+      background: #3498db;
+      transition: width 0.3s ease;
+    }
+
+    .footer-column:hover h3::after {
+      width: 100%;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 15px;
+      position: relative;
+      padding-left: 25px;
+      transition: transform 0.3s ease;
+      word-wrap: break-word;
+    }
+
+    .footer-column ul li:hover {
+      transform: translateX(5px);
+    }
+
+    /* Icons for contact information */
+    .footer-column#contact-us ul li::before {
+      font-family: sans-serif;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .footer-column#contact-us ul li:nth-child(1)::before {
+      content: '📍';
+    }
+
+    .footer-column#contact-us ul li:nth-child(2)::before {
+      content: '📞';
+    }
+
+    .footer-column#contact-us ul li:nth-child(3)::before {
+      content: '✉️';
+    }
+
+    /* Icons for school hours */
+    .footer-column#school-hours ul li::before {
+      font-family: sans-serif;
+      position: absolute;
+      left: 0;
+      top: 0;
+      content: '🕒';
+    }
+
+    /* Quick links styling */
+    .footer-column ul li a {
+      color: #ecf0f1;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      position: relative;
+      padding-left: 15px;
+      display: inline-block;
+    }
+
+    .footer-column ul li a::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #3498db;
+      font-size: 18px;
+      transition: transform 0.3s ease;
+    }
+
+    .footer-column ul li a:hover {
+      color: #3498db;
+    }
+
+    .footer-column ul li a:hover::before {
+      transform: translateY(-50%) translateX(5px);
+    }
+
+    /* Social Links */
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #3498db;
+      border-radius: 50%;
+      transform: scale(0);
+      transition: transform 0.3s ease;
+      z-index: -1;
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px);
+      color: #fff;
+    }
+
+    .social-link:hover::before {
+      transform: scale(1);
+    }
+
+    /* Facebook */
+    .social-link.facebook:hover::before {
+      background: #1877f2;
+    }
+
+    /* Twitter */
+    .social-link.twitter:hover::before {
+      background: #1da1f2;
+    }
+
+    /* Instagram */
+    .social-link.instagram:hover::before {
+      background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+    }
+
+    /* YouTube */
+    .social-link.youtube:hover::before {
+      background: #ff0000;
+    }
+
+    /* Newsletter Form */
+    .newsletter-form {
+      display: flex;
+      margin-top: 15px;
+      overflow: hidden;
+      border-radius: 5px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      border: none;
+      padding: 12px 15px;
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.9);
+      width: 100%;
+    }
+
+    .newsletter-input:focus {
+      outline: none;
+    }
+
+    .newsletter-button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 0 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .newsletter-button:hover {
+      background: #2980b9;
+    }
+
+    /* Copyright Section */
+    .copyright {
+      background: rgba(0, 0, 0, 0.2);
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 20px;
+      position: relative;
+    }
+
+    .copyright::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .copyright p {
+      font-size: 14px;
+      color: #bdc3c7;
+    }
+
+    /* Back to top button */
+    .back-to-top {
+      position: fixed;
+      /* Changed from absolute to fixed for better mobile experience */
+      right: 20px;
+      bottom: 20px;
+      /* Adjusted position for better visibility */
+      width: 50px;
+      height: 50px;
+      background: #3498db;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      text-decoration: none;
+      z-index: 1000;
+      /* Ensures button is always on top */
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: #2980b9;
+      transform: translateY(-5px);
+    }
+
+    .back-to-top::before {
+      content: '↑';
+      font-size: 24px;
+    }
+
+    /* Animation Keyframes */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Footer Logo */
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo-icon {
+      width: 40px;
+      height: 40px;
+      background: #3498db;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    /* Map container */
+    .map-container {
+      height: 150px;
+      width: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      position: relative;
+      background: #ecf0f1;
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: url('/api/placeholder/600/300') center/cover;
+      position: relative;
+    }
+
+    .map-placeholder::after {
+      content: 'View on Google Maps';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(52, 152, 219, 0.9);
+      color: white;
+      padding: 5px;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    /* Pulsing dot for location */
+    .location-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+      background: #e74c3c;
+      border-radius: 50%;
+    }
+
+    .location-dot::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(231, 76, 60, 0.6);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(3);
+        opacity: 0;
+      }
+    }
+
+    /* Improved Responsive Styles */
+    /* Extra large devices (large desktops) */
+    @media (max-width: 1200px) {
+      .container {
+        max-width: 1000px;
+      }
+    }
+
+    /* Large devices (desktops) */
+    @media (max-width: 992px) {
+      .footer-container {
+        justify-content: space-around;
+        gap: 20px;
+      }
+
+      .footer-column {
+        flex: 0 0 calc(50% - 20px);
+        min-width: 0;
+      }
+    }
+
+    /* Medium devices (tablets) */
+    @media (max-width: 768px) {
+      footer {
+        padding: 30px 0 0;
+      }
+
+      .footer-container {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .footer-column {
+        flex: 0 0 100%;
+        min-width: 0;
+      }
+
+      .social-links {
+        justify-content: center;
+      }
+
+      .newsletter-form {
+        max-width: 100%;
+      }
+
+      /* Stack animation delays for better mobile experience */
+      .footer-column:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+
+      .footer-column:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      .footer-column:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+
+      .footer-column:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+    }
+
+    /* Small devices (landscape phones) */
+    @media (max-width: 576px) {
+      footer {
+        padding: 20px 0 0;
+      }
+
+      .footer-column {
+        padding: 15px;
+      }
+
+      .footer-column h3 {
+        font-size: 18px;
+      }
+
+      .container {
+        padding: 0 15px;
+      }
+
+      .copyright p {
+        font-size: 12px;
+      }
+
+      .back-to-top {
+        width: 40px;
+        height: 40px;
+        right: 15px;
+        bottom: 15px;
+      }
+    }
+
+    /* Extra small devices */
+    @media (max-width: 320px) {
+      .footer-column {
+        padding: 10px;
+      }
+
+      .social-link {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    /* Touch device optimizations */
+    @media (hover: none) {
+      .footer-column:hover {
+        transform: none;
+      }
+
+      .social-link:hover {
+        transform: none;
+      }
+
+      /* Make buttons larger for better touch targets */
+      .newsletter-button {
+        padding: 0 25px;
+      }
+
+      .back-to-top {
+        width: 55px;
+        height: 55px;
+      }
+    }
+  </style>
+
+    <!-- Chat Bot Widget Style (from index.html) -->
+    <style>
+      .chat-widget {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+  
+      .chat-button {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #1a237e;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+  
+      .chat-button:hover {
+        transform: scale(1.1);
+      }
+  
+      .chat-window {
+        position: absolute;
+        bottom: 80px;
+        right: 0;
+        width: 350px;
+        height: 450px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+      }
+  
+      .chat-window.active {
+        display: flex;
+      }
+  
+      .chat-header {
+        background-color: #1a237e;
+        color: white;
+        padding: 15px;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+  
+      .close-chat {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
+  
+      .chat-body {
+        padding: 15px;
+        height: 300px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+  
+      .chat-message {
+        margin-bottom: 15px;
+        max-width: 80%;
+        padding: 10px 15px;
+        border-radius: 20px;
+        word-wrap: break-word;
+      }
+  
+      .bot-message {
+        background-color: #f1f1f1;
+        align-self: flex-start;
+        border-bottom-left-radius: 5px;
+      }
+  
+      .user-message {
+        background-color: #1a237e;
+        color: white;
+        align-self: flex-end;
+        border-bottom-right-radius: 5px;
+      }
+  
+      .chat-input-container {
+        padding: 10px;
+        border-top: 1px solid #eee;
+        display: flex;
+      }
+  
+      .chat-input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        outline: none;
+      }
+  
+      .send-button {
+        background-color: #1a237e;
+        color: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-left: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+  
+      .chat-form {
+        padding: 15px;
+        border-top: 1px solid #eee;
+        display: none;
+      }
+  
+      .chat-form.active {
+        display: block;
+      }
+  
+      .form-group {
+        margin-bottom: 15px;
+      }
+  
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+      }
+  
+      .form-control {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+  
+      .submit-chat-form {
+        background-color: #1a237e;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+      }
+  
+      .typing-indicator {
+        display: none;
+        background-color: #f1f0f0;
+        padding: 8px 15px;
+        border-radius: 18px;
+        margin-bottom: 10px;
+        align-self: flex-start;
+        margin-top: 5px;
+      }
+  
+      .typing-indicator.active {
+        display: flex;
+        opacity: 1;
+      }
+  
+      .typing-indicator span {
+        height: 8px;
+        width: 8px;
+        margin: 0 2px;
+        background-color: #999;
+        border-radius: 50%;
+        display: inline-block;
+        animation: bounce 1.3s linear infinite;
+      }
+  
+      .typing-indicator span:nth-child(1) {
+        animation-delay: 0s;
+      }
+  
+      .typing-indicator span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+  
+      .typing-indicator span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+  
+      @keyframes bounce {
+  
+        0%,
+        60%,
+        100% {
+          transform: translateY(0);
+        }
+  
+        30% {
+          transform: translateY(-4px);
+        }
+      }
+    </style>
+    <!-- Back to top button styles (from index.html) -->
+    <style>
+      #back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 90px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #333;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.3s, visibility 0.3s;
+        visibility: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 999;
+      }
+  
+      #back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+  
+      @media (max-width: 768px) {
+        #back-to-top {
+          bottom: 90px;
+          right: 20px;
+        }
+      }
+    </style>
+  <!--Chairman Style-->
+</head>
+
+<body>
+  <!-- Improved Header with Navigation -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img class="logo-image"
+          src="https://img.freepik.com/free-vector/gradient-high-school-logo-design_23-2149626932.jpg"
+          alt="Spring Wood School Logo">
+        <span class="logo-text">Spring Wood School</span>
+      </a>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item dropdown">
+          <a href="index.html#about" class="nav-link">
+            About Us
+            <i>▾</i>
+          </a>
+          <div class="dropdown-content">
+            <a href="about_School.html" class="dropdown-link">About School</a>
+            <a href="founder_Chairman.html" class="dropdown-link active">Founder Chairman</a>
+            <a href="vision_phy.html" class="dropdown-link">Vision and Philosophy</a>
+            <a href="why_us.html" class="dropdown-link">Why Choose Us</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="index.html#academics" class="nav-link">
+            Academics
+            <i>▾</i>
+          </a>
+          <div class="dropdown-content">
+            <a href="curriculum.html" class="dropdown-link">Curriculum</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="index.html#school-life" class="nav-link">
+            School Life
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="index.html#facilities" class="nav-link">
+            Facilities
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="index.html#advantages" class="nav-link">Advantages</a>
+        </li>
+        <li class="nav-item">
+          <a href="index.html#gallery" class="nav-link">Photo Gallery</a>
+        </li>
+        <li class="nav-item">
+          <a href="index.html#admission" class="nav-link">Admission</a>
+        </li>
+        <li class="nav-item">
+          <a href="index.html#contact_us_link" class="contact-btn">Contact Us</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+  <div class="overlay"></div>
+
+  <!-- Main Content: Founder Chairman -->
+  <section class="founder-chairman-section">
+    <div class="container">
+      <div class="section-header">
+        <h1>Founder Chairman</h1>
+        <div class="section-divider">
+          <span></span>
+        </div>
+      </div>
+
+      <div class="chairman-profile">
+        <div class="chairman-image">
+          <img src="/api/placeholder/400/500" alt="Founder Chairman">
+          <div class="chairman-social">
+            <a href="#" class="social-icon"><i class="linkedin-icon"></i></a>
+            <a href="#" class="social-icon"><i class="twitter-icon"></i></a>
+          </div>
+        </div>
+        <div class="chairman-details">
+          <h2>Dr. Rajendra Kumar</h2>
+          <p class="designation">Founder & Chairman</p>
+          <p class="quotes">"Education is not preparation for life; education is life itself."</p>
+          <div class="chairman-info">
+            <p>Dr. Rajendra Kumar founded Spring Wood School in 1985 with a vision to provide quality education that
+              focuses on holistic development of students. With over 40 years of experience in the education sector, he
+              has transformed the landscape of education through his innovative approaches and unwavering commitment.
+            </p>
+            <p>Under his visionary leadership, Spring Wood School has grown from a small institution to one of the most
+              prestigious educational establishments in the region, known for academic excellence and character
+              building.</p>
+            <p>Dr. Kumar holds a Ph.D. in Educational Leadership from Oxford University and has authored several books
+              on educational reforms and pedagogical innovations. His philosophy emphasizes on learning by doing and
+              encourages students to develop critical thinking skills rather than rote learning.</p>
+            <p>His contributions to the field of education have been recognized nationally and internationally, earning
+              him numerous accolades including the National Award for Excellence in Education Leadership in 2010.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="chairman-accomplishments">
+        <div class="accomplishment-card">
+          <div class="accomplishment-icon">🎓</div>
+          <h3>Academic Background</h3>
+          <ul>
+            <li>Ph.D. in Educational Leadership, Oxford University</li>
+            <li>Master's in Education Administration, Harvard University</li>
+            <li>Bachelor's in Science, Delhi University</li>
+          </ul>
+        </div>
+        <div class="accomplishment-card">
+          <div class="accomplishment-icon">🏆</div>
+          <h3>Awards & Recognition</h3>
+          <ul>
+            <li>National Award for Excellence in Education Leadership (2010)</li>
+            <li>Distinguished Educator Award (2015)</li>
+            <li>Lifetime Achievement Award in Education (2020)</li>
+          </ul>
+        </div>
+        <div class="accomplishment-card">
+          <div class="accomplishment-icon">📚</div>
+          <h3>Publications</h3>
+          <ul>
+            <li>"Transforming Education for the 21st Century" (2012)</li>
+            <li>"Holistic Learning: Beyond Textbooks" (2016)</li>
+            <li>"Building Character Through Education" (2019)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chairman-quote-box">
+        <div class="quote-content">
+          <p>"Our goal at Spring Wood School is not just to produce students with good grades, but to nurture
+            individuals who will be responsible citizens, innovative thinkers, and compassionate human beings who can
+            contribute positively to society."</p>
+          <div class="quote-author">
+            <p>- Dr. Rajendra Kumar</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- Footer -->
+  <footer id="contact_us_link">
+    <div class="container-for-footer">
+      <div class="footer-container">
+        <!-- About School - Moved to first for mobile priority -->
+        <div class="footer-column" id="about-school">
+          <div class="footer-logo">
+            <div class="footer-logo-icon">SW</div>
+            <h4>Spring Wood School</h4>
+          </div>
+          <p>Nurturing minds, building character, and preparing leaders of tomorrow since 1985.</p>
+
+          <h4 style="margin-top: 20px; font-size: 16px;">Stay Connected</h4>
+          <div class="social-links">
+            <a href="#" class="social-link facebook" aria-label="Facebook">FB</a>
+            <a href="#" class="social-link twitter" aria-label="Twitter">TW</a>
+            <a href="#" class="social-link instagram" aria-label="Instagram">IG</a>
+            <a href="#" class="social-link youtube" aria-label="YouTube">YT</a>
+          </div>
+
+          <h4 style="margin-top: 20px; font-size: 16px;">Subscribe to Newsletter</h4>
+          <form class="newsletter-form">
+            <input type="email" class="newsletter-input" placeholder="Your email address" required
+              aria-label="Email for newsletter">
+            <button type="submit" class="newsletter-button" aria-label="Subscribe">→</button>
+          </form>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-column" id="quick-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#academics">Academics</a></li>
+            <li><a href="#school-life">School Life</a></li>
+            <li><a href="#facilities">Facilities</a></li>
+            <li><a href="#admission">Admission</a></li>
+            <li><a href="#advantages">Advantages</a></li>
+            <li><a href="#gallery">Photo Gallery</a></li>
+          </ul>
+        </div>
+
+        <!-- School Hours -->
+        <div class="footer-column" id="school-hours">
+          <h3>School Hours</h3>
+          <ul>
+            <li>Monday - Friday: 8:00 AM - 3:30 PM</li>
+            <li>Saturday: 8:00 AM - 12:30 PM (Activities)</li>
+            <li>Admin Office: 8:00 AM - 5:00 PM</li>
+          </ul>
+
+          <div style="margin-top: 20px; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 15px;">
+            <h4 style="margin-bottom: 10px; font-size: 16px;">Important Dates</h4>
+            <p style="font-size: 14px; margin-bottom: 5px;">📅 Summer Break: May 15 - June 15</p>
+            <p style="font-size: 14px; margin-bottom: 5px;">📅 Next Term Begins: July 1st</p>
+            <p style="font-size: 14px;">📅 Annual Day: December 10</p>
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="footer-column" id="contact-us">
+          <h3>Contact Us</h3>
+          <ul>
+            <li>13-44/1, Sri Vidhya Twp, Annapurna Colony, Badangpet, Telangana 500058</li>
+            <li>Phone: <a href="tel:6300565660" style="color: #ecf0f1; text-decoration: none;">6300565660</a></li>
+            <li>Email: <a href="mailto:info@SpringWoodschool.edu"
+                style="color: #ecf0f1; text-decoration: none;">info@SpringWoodschool.edu</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <a href="#" class="back-to-top" id="back-to-top" aria-label="Back to Top"></a>
+
+      <div class="copyright">
+        <p>&copy; 2025 Spring Wood School. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!--Footer Script-->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Back to top button functionality
+      const backToTopButton = document.getElementById('back-to-top');
+
+      // Show button after scrolling down 300px
+      window.addEventListener('scroll', function () {
+        if (window.pageYOffset > 300) {
+          backToTopButton.classList.add('visible');
+        } else {
+          backToTopButton.classList.remove('visible');
+        }
+      });
+
+      // Scroll to top when button is clicked
+      backToTopButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // Ensure animation classes are applied
+      const footerColumns = document.querySelectorAll('.footer-column');
+      footerColumns.forEach(column => {
+        column.style.opacity = '1';
+        column.style.transform = 'translateY(0)';
+      });
+
+      // Handle touch events for mobile
+      if ('ontouchstart' in window) {
+        // Disable hover effects that can cause issues on touch devices
+        document.documentElement.classList.add('touch-device');
+
+        // Add tap functionality to social links
+        const socialLinks = document.querySelectorAll('.social-link');
+        socialLinks.forEach(link => {
+          link.addEventListener('touchstart', function () {
+            this.classList.add('active');
+          });
+
+          link.addEventListener('touchend', function () {
+            setTimeout(() => {
+              this.classList.remove('active');
+            }, 300);
+          });
+        });
+      }
+
+      // Improve form submission on mobile
+      const newsletterForm = document.querySelector('.newsletter-form');
+      if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const emailInput = this.querySelector('.newsletter-input');
+
+          if (emailInput.value.trim() !== '') {
+            // Show success message
+            const successMessage = document.createElement('div');
+            successMessage.className = 'newsletter-success';
+            successMessage.style.color = '#2ecc71';
+            successMessage.style.fontSize = '14px';
+            successMessage.style.marginTop = '10px';
+            successMessage.textContent = 'Thank you for subscribing!';
+
+            // Insert after the form
+            this.parentNode.insertBefore(successMessage, this.nextSibling);
+
+            // Clear input
+            emailInput.value = '';
+
+            // Remove success message after 3 seconds
+            setTimeout(() => {
+              successMessage.remove();
+            }, 3000);
+          }
+        });
+      }
+
+      // Add responsive menu toggle for mobile
+      const quickLinks = document.querySelector('#quick-links');
+      if (quickLinks && window.innerWidth < 768) {
+        const heading = quickLinks.querySelector('h3');
+        const linksList = quickLinks.querySelector('ul');
+
+        // Initially hide the links on mobile
+        if (window.innerWidth < 768) {
+          linksList.style.display = 'none';
+          heading.style.cursor = 'pointer';
+
+        }
+      }
+
+      // Add intersection observer for animation
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+
+        // Observe footer columns
+        document.querySelectorAll('.footer-column').forEach(column => {
+          observer.observe(column);
+        });
+      }
+    });
+  </script>
+
+  <!--Header Scripting-->
+  <script>
+    // Variables
+    const header = document.querySelector('.header');
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    const overlay = document.querySelector('.overlay');
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50,);
+    });
+
+    // Mobile menu toggle
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Close mobile menu when clicking overlay
+    overlay.addEventListener('click', closeMenu);
+
+    // Mobile dropdown functionality
+    dropdowns.forEach(dropdown => {
+      const link = dropdown.querySelector('.nav-link');
+
+      link.addEventListener('click', (e) => {
+        if (window.innerWidth <= 992) {
+          e.preventDefault();
+
+          // Close other dropdowns
+          dropdowns.forEach(item => {
+            if (item !== dropdown) item.classList.remove('active');
+          });
+
+          dropdown.classList.toggle('active');
+        }
+      });
+    });
+
+    // Add event listeners to all dropdown links and nav items
+    document.querySelectorAll('.dropdown-link, .nav-item:not(.dropdown) .nav-link, .contact-btn')
+      .forEach(item => {
+        item.addEventListener('click', () => {
+          if (window.innerWidth <= 992) closeMenu();
+        });
+      });
+
+    // Set active link based on current page
+    function setActivePage() {
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.nav-link').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPage || (currentPage === 'index.html' && href === 'index.html')) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    // Function to close mobile menu
+    function closeMenu() {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+
+      // Close all dropdowns
+      dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 992) closeMenu();
+    });
+
+    // Initialize
+    setActivePage();
+  </script>
+
+
+  <!-- Chat Bot Widget HTML -->
+  <div class="chat-widget">
+    <div class="chat-button" id="chat-button">💬</div>
+    <div class="chat-window" id="chat-window">
+      <div class="chat-header">
+        <span>Chat Assistance</span>
+        <button class="close-chat" id="close-chat">×</button>
+      </div>
+      <div class="chat-body" id="chat-body">
+        <div class="typing-indicator" id="typing-indicator">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="chat-input-container">
+        <input type="text" class="chat-input" id="chat-input" placeholder="Type your message..." />
+        <button class="send-button" id="send-button">➤</button>
+      </div>
+      <div class="chat-form" id="chat-form">
+        <div class="form-group">
+          <label for="chat-name">Name</label>
+          <input type="text" id="chat-name" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="chat-place">Place</label>
+          <input type="text" id="chat-place" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="chat-mobile">Mobile Number</label>
+          <input type="tel" id="chat-mobile" class="form-control" required />
+        </div>
+        <button type="button" class="submit-chat-form" id="submit-chat-form">Submit</button>
+      </div>
+    </div>
+  </div>
+  <!-- Back to top button HTML -->
+  <button id="back-to-top" title="Back to top"><!-- ↑ --></button>
+  <!-- Chat Bot and Back-to-Top JavaScript (from index.html) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Back to top button functionality
+      const backToTopButton = document.getElementById('back-to-top');
+      window.addEventListener('scroll', function () {
+        if (window.pageYOffset > 300) {
+          backToTopButton.classList.add('visible');
+        } else {
+          backToTopButton.classList.remove('visible');
+        }
+      });
+      backToTopButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      // Chat Bot Functionality
+      const chatButton = document.getElementById("chat-button");
+      const chatWindow = document.getElementById("chat-window");
+      const closeChat = document.getElementById("close-chat");
+      const chatBody = document.getElementById("chat-body");
+      const chatInput = document.getElementById("chat-input");
+      const sendButton = document.getElementById("send-button");
+      const chatForm = document.getElementById("chat-form");
+      const typingIndicator = document.getElementById("typing-indicator");
+      function adjustBackToTopPosition() {
+        if (chatWindow.classList.contains('active') && window.innerWidth <= 768) {
+          backToTopButton.style.bottom = '300px';
+        } else {
+          backToTopButton.style.bottom = window.innerWidth <= 768 ? '90px' : '20px';
+        }
+      }
+      chatButton.addEventListener("click", function () {
+        chatWindow.classList.toggle("active");
+        adjustBackToTopPosition();
+        if (chatWindow.classList.contains("active") && chatBody.children.length === 1) {
+          setTimeout(() => { sendBotMessage(chatSteps[0].message); }, 500);
+        }
+      });
+      closeChat.addEventListener("click", function () {
+        chatWindow.classList.remove("active");
+        adjustBackToTopPosition();
+      });
+      window.addEventListener('resize', adjustBackToTopPosition);
+      adjustBackToTopPosition();
+      let currentStep = 0;
+      let userData = { name: "", place: "", mobile: "", };
+      const chatSteps = [
+        { message: "Hi there! How can I help you with Spring Wood School?", expectResponse: true, processResponse: (response) => { return "Great! I'd like to get to know you better to provide personalized assistance. Could you please tell me your name?"; }, },
+        { message: "Could you please tell me your name?", expectResponse: true, processResponse: (response) => { userData.name = response; return `Nice to meet you, ${userData.name}! Where are you from?`; }, },
+        { message: "Where are you from?", expectResponse: true, processResponse: (response) => { userData.place = response; return "Thanks! Could you please share your mobile number so that our admission team can contact you?"; }, },
+        { message: "Could you please share your mobile number?", expectResponse: true, processResponse: (response) => { userData.mobile = response; return `Thank you ${userData.name}! Our admission team will contact you soon at ${userData.mobile}. Meanwhile, feel free to explore our website or ask me any questions about Spring Wood School!`; }, },
+      ];
+      function sendUserMessage() {
+        const message = chatInput.value.trim();
+        if (message === "") return;
+        const userMessageElement = document.createElement("div");
+        userMessageElement.classList.add("chat-message", "user-message");
+        userMessageElement.textContent = message;
+        chatBody.appendChild(userMessageElement);
+        chatInput.value = "";
+        chatBody.scrollTop = chatBody.scrollHeight;
+        showTypingIndicator();
+        setTimeout(() => {
+          hideTypingIndicator();
+          if (currentStep < chatSteps.length && chatSteps[currentStep].expectResponse) {
+            const nextMessage = chatSteps[currentStep].processResponse(message);
+            currentStep++;
+            if (nextMessage) { sendBotMessage(nextMessage); }
+          }
+        }, 1000);
+      }
+      function sendBotMessage(message) {
+        hideTypingIndicator();
+        const botMessageElement = document.createElement("div");
+        botMessageElement.classList.add("chat-message", "bot-message");
+        botMessageElement.textContent = message;
+        chatBody.appendChild(botMessageElement);
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }
+      function showTypingIndicator() {
+        if (typingIndicator.parentNode === chatBody) { chatBody.removeChild(typingIndicator); }
+        chatBody.appendChild(typingIndicator);
+        typingIndicator.classList.add("active");
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }
+      function hideTypingIndicator() { typingIndicator.classList.remove("active"); }
+      sendButton.addEventListener("click", function () { sendUserMessage(); });
+      chatInput.addEventListener("keypress", function (e) { if (e.key === "Enter") { sendUserMessage(); } });
+    });
+  </script>
+
+</body>
+
+</html>

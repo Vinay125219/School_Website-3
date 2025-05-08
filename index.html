@@ -3881,23 +3881,7 @@
           linksList.style.display = 'none';
           heading.style.cursor = 'pointer';
 
-          // Add toggle indicator
-          const toggleIndicator = document.createElement('span');
-          toggleIndicator.innerHTML = ' +';
-          toggleIndicator.style.float = 'right';
-          heading.appendChild(toggleIndicator);
-
-          // Toggle links visibility on click
-          heading.addEventListener('click', function () {
-            if (linksList.style.display === 'none') {
-              linksList.style.display = 'block';
-              toggleIndicator.innerHTML = ' -';
-            } else {
-              linksList.style.display = 'none';
-              toggleIndicator.innerHTML = ' +';
-            }
-          });
-        }
+          }
       }
 
       // Add intersection observer for animation
