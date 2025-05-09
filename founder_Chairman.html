@@ -1221,257 +1221,257 @@
     }
   </style>
 
-    <!-- Chat Bot Widget Style (from index.html) -->
-    <style>
-      .chat-widget {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 1000;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  <!-- Chat Bot Widget Style (from index.html) -->
+  <style>
+    .chat-widget {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .chat-button {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #1a237e;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .chat-button:hover {
+      transform: scale(1.1);
+    }
+
+    .chat-window {
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 350px;
+      height: 450px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-window.active {
+      display: flex;
+    }
+
+    .chat-header {
+      background-color: #1a237e;
+      color: white;
+      padding: 15px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .close-chat {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .chat-body {
+      padding: 15px;
+      height: 300px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-message {
+      margin-bottom: 15px;
+      max-width: 80%;
+      padding: 10px 15px;
+      border-radius: 20px;
+      word-wrap: break-word;
+    }
+
+    .bot-message {
+      background-color: #f1f1f1;
+      align-self: flex-start;
+      border-bottom-left-radius: 5px;
+    }
+
+    .user-message {
+      background-color: #1a237e;
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 5px;
+    }
+
+    .chat-input-container {
+      padding: 10px;
+      border-top: 1px solid #eee;
+      display: flex;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      outline: none;
+    }
+
+    .send-button {
+      background-color: #1a237e;
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-left: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chat-form {
+      padding: 15px;
+      border-top: 1px solid #eee;
+      display: none;
+    }
+
+    .chat-form.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .submit-chat-form {
+      background-color: #1a237e;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .typing-indicator {
+      display: none;
+      background-color: #f1f0f0;
+      padding: 8px 15px;
+      border-radius: 18px;
+      margin-bottom: 10px;
+      align-self: flex-start;
+      margin-top: 5px;
+    }
+
+    .typing-indicator.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .typing-indicator span {
+      height: 8px;
+      width: 8px;
+      margin: 0 2px;
+      background-color: #999;
+      border-radius: 50%;
+      display: inline-block;
+      animation: bounce 1.3s linear infinite;
+    }
+
+    .typing-indicator span:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .typing-indicator span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-indicator span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0);
       }
-  
-      .chat-button {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background-color: #1a237e;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
+
+      30% {
+        transform: translateY(-4px);
       }
-  
-      .chat-button:hover {
-        transform: scale(1.1);
-      }
-  
-      .chat-window {
-        position: absolute;
-        bottom: 80px;
-        right: 0;
-        width: 350px;
-        height: 450px;
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        display: none;
-        flex-direction: column;
-        overflow: hidden;
-      }
-  
-      .chat-window.active {
-        display: flex;
-      }
-  
-      .chat-header {
-        background-color: #1a237e;
-        color: white;
-        padding: 15px;
-        font-weight: bold;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-  
-      .close-chat {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 1.2rem;
-        cursor: pointer;
-      }
-  
-      .chat-body {
-        padding: 15px;
-        height: 300px;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-      }
-  
-      .chat-message {
-        margin-bottom: 15px;
-        max-width: 80%;
-        padding: 10px 15px;
-        border-radius: 20px;
-        word-wrap: break-word;
-      }
-  
-      .bot-message {
-        background-color: #f1f1f1;
-        align-self: flex-start;
-        border-bottom-left-radius: 5px;
-      }
-  
-      .user-message {
-        background-color: #1a237e;
-        color: white;
-        align-self: flex-end;
-        border-bottom-right-radius: 5px;
-      }
-  
-      .chat-input-container {
-        padding: 10px;
-        border-top: 1px solid #eee;
-        display: flex;
-      }
-  
-      .chat-input {
-        flex: 1;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 20px;
-        outline: none;
-      }
-  
-      .send-button {
-        background-color: #1a237e;
-        color: white;
-        border: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-left: 10px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-  
-      .chat-form {
-        padding: 15px;
-        border-top: 1px solid #eee;
-        display: none;
-      }
-  
-      .chat-form.active {
-        display: block;
-      }
-  
-      .form-group {
-        margin-bottom: 15px;
-      }
-  
-      .form-group label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: 500;
-      }
-  
-      .form-control {
-        width: 100%;
-        padding: 8px 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 14px;
-      }
-  
-      .submit-chat-form {
-        background-color: #1a237e;
-        color: white;
-        border: none;
-        padding: 8px 15px;
-        border-radius: 4px;
-        cursor: pointer;
-        width: 100%;
-      }
-  
-      .typing-indicator {
-        display: none;
-        background-color: #f1f0f0;
-        padding: 8px 15px;
-        border-radius: 18px;
-        margin-bottom: 10px;
-        align-self: flex-start;
-        margin-top: 5px;
-      }
-  
-      .typing-indicator.active {
-        display: flex;
-        opacity: 1;
-      }
-  
-      .typing-indicator span {
-        height: 8px;
-        width: 8px;
-        margin: 0 2px;
-        background-color: #999;
-        border-radius: 50%;
-        display: inline-block;
-        animation: bounce 1.3s linear infinite;
-      }
-  
-      .typing-indicator span:nth-child(1) {
-        animation-delay: 0s;
-      }
-  
-      .typing-indicator span:nth-child(2) {
-        animation-delay: 0.2s;
-      }
-  
-      .typing-indicator span:nth-child(3) {
-        animation-delay: 0.4s;
-      }
-  
-      @keyframes bounce {
-  
-        0%,
-        60%,
-        100% {
-          transform: translateY(0);
-        }
-  
-        30% {
-          transform: translateY(-4px);
-        }
-      }
-    </style>
-    <!-- Back to top button styles (from index.html) -->
-    <style>
+    }
+  </style>
+  <!-- Back to top button styles (from index.html) -->
+  <style>
+    #back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 90px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #333;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s, visibility 0.3s;
+      visibility: hidden;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+    }
+
+    #back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @media (max-width: 768px) {
       #back-to-top {
-        position: fixed;
-        bottom: 20px;
-        right: 90px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: #333;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        opacity: 0;
-        transition: opacity 0.3s, visibility 0.3s;
-        visibility: hidden;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        z-index: 999;
+        bottom: 90px;
+        right: 20px;
       }
-  
-      #back-to-top.visible {
-        opacity: 1;
-        visibility: visible;
-      }
-  
-      @media (max-width: 768px) {
-        #back-to-top {
-          bottom: 90px;
-          right: 20px;
-        }
-      }
-    </style>
+    }
+  </style>
   <!--Chairman Style-->
 
 
   <!--Login Style-->
-<style>
-  .login-btn {
-    background: linear-gradient(135deg, var(--accent), #f08871);
-    color: white;
+  <style>
+    .login-btn {
+      background: linear-gradient(135deg, var(--accent), #f08871);
+      color: white;
       padding: clamp(6px, 1.5vw, 9px) clamp(12px, 2.5vw, 18px);
       border-radius: 50px;
       font-weight: 500;
@@ -1480,23 +1480,23 @@
       transition: var(--transition);
       margin-left: clamp(4px, 1vw, 8px);
       white-space: nowrap;
-  }
+    }
 
-  .login-btn:hover {
-    background: linear-gradient(135deg, #f08871, var(--accent));
-    transform: translateY(-2px);
-  }
+    .login-btn:hover {
+      background: linear-gradient(135deg, #f08871, var(--accent));
+      transform: translateY(-2px);
+    }
 
-  @media (max-width: 992px) {
-    .login-btn {
-      margin: 15px 65px;
+    @media (max-width: 992px) {
+      .login-btn {
+        margin: 15px 65px;
         text-align: center;
         display: block;
         padding: 8px;
-        width:50%;
+        width: 50%;
+      }
     }
-  }
-</style>
+  </style>
 </head>
 
 <body>
@@ -1507,7 +1507,7 @@
         <img class="logo-image"
           src="https://img.freepik.com/free-vector/gradient-high-school-logo-design_23-2149626932.jpg"
           alt="Spring Wood School Logo">
-        <span class="logo-text">Spring Wood School</span>
+        <span class="logo-text">Bhavishya School</span>
       </a>
       <div class="hamburger">
         <span></span>
@@ -1589,11 +1589,11 @@
           <p class="designation">Founder & Chairman</p>
           <p class="quotes">"Education is not preparation for life; education is life itself."</p>
           <div class="chairman-info">
-            <p>Dr. Rajendra Kumar founded Spring Wood School in 1985 with a vision to provide quality education that
+            <p>Dr. Rajendra Kumar founded Bhavishya School in 1985 with a vision to provide quality education that
               focuses on holistic development of students. With over 40 years of experience in the education sector, he
               has transformed the landscape of education through his innovative approaches and unwavering commitment.
             </p>
-            <p>Under his visionary leadership, Spring Wood School has grown from a small institution to one of the most
+            <p>Under his visionary leadership, Bhavishya School has grown from a small institution to one of the most
               prestigious educational establishments in the region, known for academic excellence and character
               building.</p>
             <p>Dr. Kumar holds a Ph.D. in Educational Leadership from Oxford University and has authored several books
@@ -1637,7 +1637,7 @@
 
       <div class="chairman-quote-box">
         <div class="quote-content">
-          <p>"Our goal at Spring Wood School is not just to produce students with good grades, but to nurture
+          <p>"Our goal at Bhavishya School is not just to produce students with good grades, but to nurture
             individuals who will be responsible citizens, innovative thinkers, and compassionate human beings who can
             contribute positively to society."</p>
           <div class="quote-author">
@@ -1658,8 +1658,8 @@
         <!-- About School - Moved to first for mobile priority -->
         <div class="footer-column" id="about-school">
           <div class="footer-logo">
-            <div class="footer-logo-icon">SW</div>
-            <h4>Spring Wood School</h4>
+            <div class="footer-logo-icon">BS</div>
+            <h4>Bhavishya School</h4>
           </div>
           <p>Nurturing minds, building character, and preparing leaders of tomorrow since 1985.</p>
 
@@ -1715,10 +1715,10 @@
         <div class="footer-column" id="contact-us">
           <h3>Contact Us</h3>
           <ul>
-            <li>13-44/1, Sri Vidhya Twp, Annapurna Colony, Badangpet, Telangana 500058</li>
+            <li>Balapur, Telangana 500058</li>
             <li>Phone: <a href="tel:6300565660" style="color: #ecf0f1; text-decoration: none;">6300565660</a></li>
-            <li>Email: <a href="mailto:info@SpringWoodschool.edu"
-                style="color: #ecf0f1; text-decoration: none;">info@SpringWoodschool.edu</a></li>
+            <li>Email: <a href="mailto:info@BhavishyaSchool.edu"
+                style="color: #ecf0f1; text-decoration: none;">info@BhavishyaSchool.edu</a></li>
           </ul>
         </div>
       </div>
@@ -1726,7 +1726,7 @@
       <a href="#" class="back-to-top" id="back-to-top" aria-label="Back to Top"></a>
 
       <div class="copyright">
-        <p>&copy; 2025 Spring Wood School. All Rights Reserved.</p>
+        <p>&copy; 2025 Bhavishya School. All Rights Reserved.</p>
       </div>
     </div>
   </footer>
@@ -1995,10 +1995,10 @@
       let currentStep = 0;
       let userData = { name: "", place: "", mobile: "", };
       const chatSteps = [
-        { message: "Hi there! How can I help you with Spring Wood School?", expectResponse: true, processResponse: (response) => { return "Great! I'd like to get to know you better to provide personalized assistance. Could you please tell me your name?"; }, },
+        { message: "Hi there! How can I help you with Bhavishya School?", expectResponse: true, processResponse: (response) => { return "Great! I'd like to get to know you better to provide personalized assistance. Could you please tell me your name?"; }, },
         { message: "Could you please tell me your name?", expectResponse: true, processResponse: (response) => { userData.name = response; return `Nice to meet you, ${userData.name}! Where are you from?`; }, },
         { message: "Where are you from?", expectResponse: true, processResponse: (response) => { userData.place = response; return "Thanks! Could you please share your mobile number so that our admission team can contact you?"; }, },
-        { message: "Could you please share your mobile number?", expectResponse: true, processResponse: (response) => { userData.mobile = response; return `Thank you ${userData.name}! Our admission team will contact you soon at ${userData.mobile}. Meanwhile, feel free to explore our website or ask me any questions about Spring Wood School!`; }, },
+        { message: "Could you please share your mobile number?", expectResponse: true, processResponse: (response) => { userData.mobile = response; return `Thank you ${userData.name}! Our admission team will contact you soon at ${userData.mobile}. Meanwhile, feel free to explore our website or ask me any questions about Bhavishya School!`; }, },
       ];
       function sendUserMessage() {
         const message = chatInput.value.trim();

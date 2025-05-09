@@ -1500,11 +1500,11 @@
 
 
 
-<!--Login Style-->
-<style>
-  .login-btn {
-    background: linear-gradient(135deg, var(--accent), #f08871);
-    color: white;
+  <!--Login Style-->
+  <style>
+    .login-btn {
+      background: linear-gradient(135deg, var(--accent), #f08871);
+      color: white;
       padding: clamp(6px, 1.5vw, 9px) clamp(12px, 2.5vw, 18px);
       border-radius: 50px;
       font-weight: 500;
@@ -1513,23 +1513,23 @@
       transition: var(--transition);
       margin-left: clamp(4px, 1vw, 8px);
       white-space: nowrap;
-  }
+    }
 
-  .login-btn:hover {
-    background: linear-gradient(135deg, #f08871, var(--accent));
-    transform: translateY(-2px);
-  }
+    .login-btn:hover {
+      background: linear-gradient(135deg, #f08871, var(--accent));
+      transform: translateY(-2px);
+    }
 
-  @media (max-width: 992px) {
-    .login-btn {
-      margin: 15px 65px;
+    @media (max-width: 992px) {
+      .login-btn {
+        margin: 15px 65px;
         text-align: center;
         display: block;
         padding: 8px;
-        width:50%;
+        width: 50%;
+      }
     }
-  }
-</style>
+  </style>
 </head>
 
 <body>
@@ -1540,7 +1540,7 @@
         <img class="logo-image"
           src="https://img.freepik.com/free-vector/gradient-high-school-logo-design_23-2149626932.jpg"
           alt="Spring Wood School Logo">
-        <span class="logo-text">Spring Wood School</span>
+        <span class="logo-text">Bhavishya School</span>
       </a>
       <div class="hamburger">
         <span></span>
@@ -1627,7 +1627,7 @@
           <div class="vision-text">
             <p class="vision-statement">"To be a premier educational institution that empowers students to become
               lifelong learners and responsible global citizens."</p>
-            <p>At Spring Wood School, we envision creating an educational environment where:</p>
+            <p>At Bhavishya School, we envision creating an educational environment where:</p>
             <ul class="vision-list">
               <li>
                 <span class="list-marker">✧</span>
@@ -1710,7 +1710,7 @@
       <div class="core-values-section">
         <div class="values-header">
           <h2>Our Core Values</h2>
-          <p>These values guide everything we do at Spring Wood School</p>
+          <p>These values guide everything we do at Bhavishya School</p>
         </div>
 
         <div class="values-container">
@@ -1773,7 +1773,7 @@
       <div class="educational-approach">
         <h2>Our Educational Approach</h2>
         <div class="approach-content">
-          <p>At Spring Wood School, we implement our philosophy through a balanced approach that combines:</p>
+          <p>At Bhavishya School, we implement our philosophy through a balanced approach that combines:</p>
 
           <div class="approach-cards">
             <div class="approach-card">
@@ -1821,8 +1821,8 @@
         <!-- About School - Moved to first for mobile priority -->
         <div class="footer-column" id="about-school">
           <div class="footer-logo">
-            <div class="footer-logo-icon">SW</div>
-            <h4>Spring Wood School</h4>
+            <div class="footer-logo-icon">BS</div>
+            <h4>Bhavishya School</h4>
           </div>
           <p>Nurturing minds, building character, and preparing leaders of tomorrow since 1985.</p>
 
@@ -1878,10 +1878,10 @@
         <div class="footer-column" id="contact-us">
           <h3>Contact Us</h3>
           <ul>
-            <li>13-44/1, Sri Vidhya Twp, Annapurna Colony, Badangpet, Telangana 500058</li>
+            <li>Balapur, Telangana 500058</li>
             <li>Phone: <a href="tel:6300565660" style="color: #ecf0f1; text-decoration: none;">6300565660</a></li>
-            <li>Email: <a href="mailto:info@SpringWoodschool.edu"
-                style="color: #ecf0f1; text-decoration: none;">info@SpringWoodschool.edu</a></li>
+            <li>Email: <a href="mailto:info@BhavishyaSchool.edu"
+                style="color: #ecf0f1; text-decoration: none;">info@BhavishyaSchool.edu</a></li>
           </ul>
         </div>
       </div>
@@ -1889,7 +1889,7 @@
       <a href="#" class="back-to-top" id="back-to-top" aria-label="Back to Top"></a>
 
       <div class="copyright">
-        <p>&copy; 2025 Spring Wood School. All Rights Reserved.</p>
+        <p>&copy; 2025 Bhavishya School. All Rights Reserved.</p>
       </div>
     </div>
   </footer>
@@ -2157,10 +2157,10 @@
       let currentStep = 0;
       let userData = { name: "", place: "", mobile: "", };
       const chatSteps = [
-        { message: "Hi there! How can I help you with Spring Wood School?", expectResponse: true, processResponse: (response) => { return "Great! I'd like to get to know you better to provide personalized assistance. Could you please tell me your name?"; }, },
+        { message: "Hi there! How can I help you with Bhavishya School?", expectResponse: true, processResponse: (response) => { return "Great! I'd like to get to know you better to provide personalized assistance. Could you please tell me your name?"; }, },
         { message: "Could you please tell me your name?", expectResponse: true, processResponse: (response) => { userData.name = response; return `Nice to meet you, ${userData.name}! Where are you from?`; }, },
         { message: "Where are you from?", expectResponse: true, processResponse: (response) => { userData.place = response; return "Thanks! Could you please share your mobile number so that our admission team can contact you?"; }, },
-        { message: "Could you please share your mobile number?", expectResponse: true, processResponse: (response) => { userData.mobile = response; return `Thank you ${userData.name}! Our admission team will contact you soon at ${userData.mobile}. Meanwhile, feel free to explore our website or ask me any questions about Spring Wood School!`; }, },
+        { message: "Could you please share your mobile number?", expectResponse: true, processResponse: (response) => { userData.mobile = response; return `Thank you ${userData.name}! Our admission team will contact you soon at ${userData.mobile}. Meanwhile, feel free to explore our website or ask me any questions about Bhavishya School!`; }, },
       ];
       function sendUserMessage() {
         const message = chatInput.value.trim();

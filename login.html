@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Spring Wood School</title>
+  <title>Login - Bhavishya School</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* Base styles and reset */
@@ -309,10 +310,27 @@
     }
 
     @keyframes shake {
-      10%, 90% { transform: translateX(-1px); }
-      20%, 80% { transform: translateX(2px); }
-      30%, 50%, 70% { transform: translateX(-4px); }
-      40%, 60% { transform: translateX(4px); }
+
+      10%,
+      90% {
+        transform: translateX(-1px);
+      }
+
+      20%,
+      80% {
+        transform: translateX(2px);
+      }
+
+      30%,
+      50%,
+      70% {
+        transform: translateX(-4px);
+      }
+
+      40%,
+      60% {
+        transform: translateX(4px);
+      }
     }
 
     /* Footer */
@@ -351,75 +369,75 @@
       }
     }
 
-       .user-tabs {
-    display: flex;
-    border-bottom: 1px solid #e1e5eb;
-    margin-bottom: 1.5rem;
-  }
-  
-  .tab-btn {
-    flex: 1;
-    background: none;
-    border: none;
-    padding: 1rem;
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #6c757d;
-    cursor: pointer;
-    transition: var(--transition);
-    position: relative;
-  }
-  
-  .tab-btn.active {
-    color: var(--primary);
-  }
-  
-  .tab-btn.active::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: var(--primary);
-  }
-  
-  .tab-btn:hover {
-    color: var(--primary-light);
-  }
-  
-  /* Demo logins styling */
-  .demo-login {
-    margin-top: 1.5rem;
-    text-align: center;
-    padding: 1rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-  }
-  
-  .demo-login p {
-    margin-bottom: 0.8rem;
-    font-weight: 500;
-    color: var(--primary-dark);
-  }
-  
-  .demo-btn {
-    background: white;
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    margin: 0 0.5rem;
-    cursor: pointer;
-    transition: var(--transition);
-    font-weight: 500;
-  }
-  
-  .demo-btn:hover {
-    background: var(--primary);
-    color: white;
-  }
+    .user-tabs {
+      display: flex;
+      border-bottom: 1px solid #e1e5eb;
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      padding: 1rem;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #6c757d;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+    }
+
+    .tab-btn.active::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--primary);
+    }
+
+    .tab-btn:hover {
+      color: var(--primary-light);
+    }
+
+    /* Demo logins styling */
+    .demo-login {
+      margin-top: 1.5rem;
+      text-align: center;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .demo-login p {
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+      color: var(--primary-dark);
+    }
+
+    .demo-btn {
+      background: white;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      margin: 0 0.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+
+    .demo-btn:hover {
+      background: var(--primary);
+      color: white;
+    }
   </style>
 </head>
 
@@ -427,9 +445,10 @@
   <header class="header">
     <div class="header-inner">
       <a href="index.html" class="logo">
-        <img class="logo-image" src="https://img.freepik.com/free-vector/gradient-high-school-logo-design_23-2149626932.jpg"
+        <img class="logo-image"
+          src="https://img.freepik.com/free-vector/gradient-high-school-logo-design_23-2149626932.jpg"
           alt="Spring Wood School Logo">
-        <span class="logo-text">Spring Wood School</span>
+        <span class="logo-text">Bhavishya School</span>
       </a>
     </div>
   </header>
@@ -438,7 +457,7 @@
     <div class="login-container" id="loginContainer">
       <div class="login-header">
         <h1>Welcome Back</h1>
-        <p>Log in to access your Spring Wood School account</p>
+        <p>Log in to access your Bhavishya School account</p>
       </div>
       <!-- Added tabs for user role selection -->
       <div class="user-tabs">
@@ -465,11 +484,13 @@
           <a href="#" class="forgot-password">Forgot Password?</a>
         </div>
         <button type="submit" class="submit-btn" id="submitBtn">Log In</button>
-         <!-- Demo logins section -->
+        <!-- Demo logins section -->
         <div class="demo-login">
           <p>Demo Accounts:</p>
-          <button type="button" class="demo-btn" data-email="student@springwood.edu" data-password="student123" data-role="student">Student Demo</button>
-          <button type="button" class="demo-btn" data-email="teacher@springwood.edu" data-password="teacher123" data-role="teacher">Teacher Demo</button>
+          <button type="button" class="demo-btn" data-email="student@springwood.edu" data-password="student123"
+            data-role="student">Student Demo</button>
+          <button type="button" class="demo-btn" data-email="teacher@springwood.edu" data-password="teacher123"
+            data-role="teacher">Teacher Demo</button>
         </div>
         <div class="signup-link">
           Don't have an account? <a href="#">Sign up</a>
@@ -479,7 +500,7 @@
   </div>
 
   <footer class="footer">
-    <p>&copy; 2025 Spring Wood School. All rights reserved. <a href="index.html" class="back-to-home">Back to Home</a></p>
+    <p>&copy; 2025 Bhavishya School. All rights reserved. <a href="index.html" class="back-to-home">Back to Home</a></p>
   </footer>
 
   <script>
@@ -602,7 +623,7 @@
       // Show success state
       submitBtn.innerHTML = '<span class="loading-spinner"></span> Logging in...';
       submitBtn.disabled = true;
-      
+
       // Simulate server request
       setTimeout(() => {
         // Redirect to dashboard (for demo purposes)
@@ -630,97 +651,98 @@
     `;
     document.head.appendChild(style);
   </script>
-    <!-- JavaScript changes -->
+  <!-- JavaScript changes -->
 
   <script>
-  // Keep existing JavaScript variables and add new ones
+    // Keep existing JavaScript variables and add new ones
 
-  // Add tab functionality
-  const tabBtns = document.querySelectorAll('.tab-btn');
-  const demoBtns = document.querySelectorAll('.demo-btn');
-  let currentRole = 'student'; // Default role
+    // Add tab functionality
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const demoBtns = document.querySelectorAll('.demo-btn');
+    let currentRole = 'student'; // Default role
 
-  // Tab switching
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      // Remove active class from all tabs
-      tabBtns.forEach(tab => tab.classList.remove('active'));
-      
-      // Add active class to clicked tab
-      btn.classList.add('active');
-      
-      // Update current role
-      currentRole = btn.dataset.role;
-    });
-  });
+    // Tab switching
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active class from all tabs
+        tabBtns.forEach(tab => tab.classList.remove('active'));
 
-  // Demo login functionality
-  demoBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      // Fill in the form with demo credentials
-      emailInput.value = btn.dataset.email;
-      passwordInput.value = btn.dataset.password;
-      
-      // Select the appropriate tab
-      const role = btn.dataset.role;
-      tabBtns.forEach(tab => {
-        tab.classList.toggle('active', tab.dataset.role === role);
+        // Add active class to clicked tab
+        btn.classList.add('active');
+
+        // Update current role
+        currentRole = btn.dataset.role;
       });
-      
-      currentRole = role;
-      
-      // Hide any errors
-      hideError(emailInput, emailError);
-      hideError(passwordInput, passwordError);
     });
-  });
 
-  // Update form submission handler
-  loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    let isValid = true;
+    // Demo login functionality
+    demoBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Fill in the form with demo credentials
+        emailInput.value = btn.dataset.email;
+        passwordInput.value = btn.dataset.password;
 
-    // Validate email
-    if (emailInput.value === '') {
-      showError(emailInput, emailError, 'Email is required');
-      isValid = false;
-    } else if (!validateEmail(emailInput.value)) {
-      showError(emailInput, emailError, 'Please enter a valid email address');
-      isValid = false;
-    }
+        // Select the appropriate tab
+        const role = btn.dataset.role;
+        tabBtns.forEach(tab => {
+          tab.classList.toggle('active', tab.dataset.role === role);
+        });
 
-    // Validate password
-    if (passwordInput.value === '') {
-      showError(passwordInput, passwordError, 'Password is required');
-      isValid = false;
-    } else if (passwordInput.value.length < 6) {
-      showError(passwordInput, passwordError, 'Password must be at least 6 characters');
-      isValid = false;
-    }
+        currentRole = role;
 
-    if (!isValid) {
-      // Shake animation for invalid submission
-      loginContainer.classList.add('shake');
-      setTimeout(() => {
-        loginContainer.classList.remove('shake');
-      }, 500);
-      return;
-    }
+        // Hide any errors
+        hideError(emailInput, emailError);
+        hideError(passwordInput, passwordError);
+      });
+    });
 
-    // Show success state
-    submitBtn.innerHTML = '<span class="loading-spinner"></span> Logging in...';
-    submitBtn.disabled = true;
-    
-    // Simulate server request
-    setTimeout(() => {
-      // Redirect based on user role
-      if (currentRole === 'teacher') {
-        window.location.href = 'teacher.html';
-      } else {
-        window.location.href = 'student.html';
+    // Update form submission handler
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let isValid = true;
+
+      // Validate email
+      if (emailInput.value === '') {
+        showError(emailInput, emailError, 'Email is required');
+        isValid = false;
+      } else if (!validateEmail(emailInput.value)) {
+        showError(emailInput, emailError, 'Please enter a valid email address');
+        isValid = false;
       }
-    }, 2000);
-  });
+
+      // Validate password
+      if (passwordInput.value === '') {
+        showError(passwordInput, passwordError, 'Password is required');
+        isValid = false;
+      } else if (passwordInput.value.length < 6) {
+        showError(passwordInput, passwordError, 'Password must be at least 6 characters');
+        isValid = false;
+      }
+
+      if (!isValid) {
+        // Shake animation for invalid submission
+        loginContainer.classList.add('shake');
+        setTimeout(() => {
+          loginContainer.classList.remove('shake');
+        }, 500);
+        return;
+      }
+
+      // Show success state
+      submitBtn.innerHTML = '<span class="loading-spinner"></span> Logging in...';
+      submitBtn.disabled = true;
+
+      // Simulate server request
+      setTimeout(() => {
+        // Redirect based on user role
+        if (currentRole === 'teacher') {
+          window.location.href = 'teacher.html';
+        } else {
+          window.location.href = 'student.html';
+        }
+      }, 2000);
+    });
   </script>
 </body>
+
 </html>
