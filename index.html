@@ -2569,6 +2569,39 @@
       }
     }
   </style>
+
+<!--Login Style-->
+<style>
+  .login-btn {
+    background: linear-gradient(135deg, var(--accent), #f08871);
+    color: white;
+      padding: clamp(6px, 1.5vw, 9px) clamp(12px, 2.5vw, 18px);
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: clamp(0.8rem, 1.1vw, 1rem);
+      box-shadow: 0 4px 12px rgba(61, 90, 128, 0.3);
+      transition: var(--transition);
+      margin-left: clamp(4px, 1vw, 8px);
+      white-space: nowrap;
+  }
+
+  .login-btn:hover {
+    background: linear-gradient(135deg, #f08871, var(--accent));
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 992px) {
+    .login-btn {
+      margin: 15px 65px;
+        text-align: center;
+        display: block;
+        padding: 8px;
+        width:50%;
+    }
+  }
+</style>
+
+
 </head>
 
 <body>
@@ -2629,6 +2662,9 @@
         </li>
         <li class="nav-item">
           <a href="#contact_us_link" class="contact-btn">Contact Us</a>
+        </li>
+        <li class="nav-item">
+          <a href="login.html" class="login-btn">Login</a>
         </li>
       </ul>
     </div>

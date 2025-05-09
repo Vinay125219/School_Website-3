@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f7;
+            color: #333;
+        }
+        
+        /* Top navigation/header area */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #27ae60;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .logout-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .logout-btn:hover {
+            background-color: #d32f2f;
+        }
+        
+        /* Main content area */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 25px auto;
+            padding: 0 20px;
+        }
+        
+        .welcome-section {
+            margin-bottom: 30px;
+        }
+        
+        .welcome-section h1 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: #2c3e50;
+        }
+        
+        .welcome-section p {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+        
+        /* Dashboard grid layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            color: white;
+            font-size: 20px;
+        }
+        
+        .courses-icon {
+            background-color: #27ae60;
+        }
+        
+        .students-icon {
+            background-color: #9b59b6;
+        }
+        
+        .calendar-icon {
+            background-color: #2ecc71;
+        }
+        
+        .grading-icon {
+            background-color: #e67e22;
+        }
+        
+        .card-content {
+            margin-bottom: 15px;
+        }
+        
+        .statistics {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+        
+        .course-list, .student-list, .grade-list {
+            list-style: none;
+        }
+        
+        .course-item, .student-item, .grade-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .course-item:last-child, .student-item:last-child, .grade-item:last-child {
+            border-bottom: none;
+        }
+        
+        .course-name, .student-name, .grade-item-name {
+            font-weight: 500;
+        }
+        
+        .course-code, .student-id, .grade-status {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        .card-footer {
+            margin-top: 20px;
+        }
+        
+        .card-link {
+            display: inline-block;
+            color: #27ae60;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .card-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Student performance chart */
+        .chart-container {
+            height: 200px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .chart-bar {
+            display: inline-block;
+            width: 18%;
+            margin: 0 1%;
+            position: absolute;
+            bottom: 0;
+            border-radius: 4px 4px 0 0;
+            background-color: #3498db;
+            transition: height 1s ease-in-out;
+        }
+        
+        .bar-a {
+            left: 0%;
+            background-color: #27ae60;
+            height: 70%;
+        }
+        
+        .bar-b {
+            left: 20%;
+            background-color: #2ecc71;
+            height: 85%;
+        }
+        
+        .bar-c {
+            left: 40%;
+            background-color: #f1c40f;
+            height: 55%;
+        }
+        
+        .bar-d {
+            left: 60%;
+            background-color: #e67e22;
+            height: 30%;
+        }
+        
+        .bar-f {
+            left: 80%;
+            background-color: #e74c3c;
+            height: 15%;
+        }
+        
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            text-align: center;
+            width: 18%;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .label-a { left: 0%; }
+        .label-b { left: 20%; }
+        .label-c { left: 40%; }
+        .label-d { left: 60%; }
+        .label-f { left: 80%; }
+        
+        /* Upcoming classes section */
+        .classes-section {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .classes-timeline {
+            display: flex;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            gap: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: #ccc transparent;
+        }
+        
+        .classes-timeline::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .classes-timeline::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 3px;
+        }
+        
+        .classes-timeline::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+        
+        .class-card {
+            min-width: 250px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            padding: 15px;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .class-time {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 8px;
+        }
+        
+        .class-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        
+        .class-details {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+        
+        /* Action buttons for teaching tasks */
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .action-btn {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-primary {
+            background-color: #27ae60;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #219653;
+        }
+        
+        .btn-secondary {
+            background-color: #ecf0f1;
+            color: #2c3e50;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #d7dbdd;
+        }
+        
+        /* Recent notifications */
+        .notification-list {
+            list-style: none;
+        }
+        
+        .notification-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+        
+        .notification-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+        
+        .notification-message {
+            flex-grow: 1;
+        }
+        
+        .notification-title {
+            font-weight: 500;
+            margin-bottom: 3px;
+            font-size: 14px;
+        }
+        
+        .notification-text {
+            color: #7f8c8d;
+            font-size: 13px;
+        }
+        
+        .notification-time {
+            color: #95a5a6;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+        
+        /* To-do list */
+        .todo-list {
+            list-style: none;
+        }
+        
+        .todo-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+        }
+        
+        .todo-checkbox {
+            width: 18px;
+            height: 18px;
+            border-radius: 3px;
+            border: 1px solid #bdc3c7;
+            display: inline-block;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .todo-checkbox.checked {
+            background-color: #27ae60;
+            border-color: #27ae60;
+        }
+        
+        .todo-checkbox.checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 12px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .todo-text {
+            flex-grow: 1;
+            font-size: 14px;
+        }
+        
+        .todo-text.completed {
+            text-decoration: line-through;
+            color: #95a5a6;
+        }
+        
+        .todo-due {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .classes-timeline {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .class-card {
+                min-width: unset;
+            }
+            
+            .welcome-section h1 {
+                font-size: 24px;
+            }
+            
+            .top-bar {
+                padding: 12px 15px;
+            }
+            
+            .card-title {
+                font-size: 16px;
+            }
+            
+            .section-title {
+                font-size: 18px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .dashboard-container {
+                padding: 0 10px;
+                margin: 15px auto;
+            }
+            
+            .statistics {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .stat-item {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                width: 100%;
+            }
+            
+            .stat-value {
+                font-size: 18px;
+                margin-bottom: 0;
+            }
+            
+            .welcome-section h1 {
+                font-size: 20px;
+            }
+            
+            .welcome-section p {
+                font-size: 14px;
+            }
+            
+            .user-name {
+                font-size: 14px;
+            }
+            
+            .logout-btn {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+            
+            .card-content {
+                margin-bottom: 10px;
+            }
+            
+            .card-footer {
+                margin-top: 10px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .dashboard-card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top bar with user info and logout button -->
+    <div class="top-bar">
+        <div class="user-info">
+            <div class="user-avatar">DR</div>
+            <span class="user-name">Dr. Sarah Johnson</span>
+        </div>
+        <button class="logout-btn" id="logoutBtn">Logout</button>
+    </div>
+    
+    <!-- Main dashboard content -->
+    <div class="dashboard-container">
+        <!-- Welcome section -->
+        <div class="welcome-section">
+            <h1>Welcome back, Dr. Johnson!</h1>
+            <p>Here's an overview of your teaching activities and upcoming classes.</p>
+        </div>
+        
+        <!-- Dashboard cards -->
+        <div class="dashboard-grid">
+            <!-- Courses card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">My Courses</h2>
+                    <div class="card-icon courses-icon">📚</div>
+                </div>
+                <div class="card-content">
+                    <div class="statistics">
+                        <div class="stat-item">
+                            <div class="stat-value">4</div>
+                            <div class="stat-label">Active</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">128</div>
+                            <div class="stat-label">Students</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">86%</div>
+                            <div class="stat-label">Attendance</div>
+                        </div>
+                    </div>
+                    <ul class="course-list">
+                        <li class="course-item">
+                            <span class="course-name">Data Structures</span>
+                            <span class="course-code">CS201</span>
+                        </li>
+                        <li class="course-item">
+                            <span class="course-name">Web Development</span>
+                            <span class="course-code">CS210</span>
+                        </li>
+                        <li class="course-item">
+                            <span class="course-name">Programming Fundamentals</span>
+                            <span class="course-code">CS101</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-link">Manage all courses →</a>
+                </div>
+            </div>
+            
+            <!-- Students card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">Students</h2>
+                    <div class="card-icon students-icon">👨‍🎓</div>
+                </div>
+                <div class="card-content">
+                    <div class="statistics">
+                        <div class="stat-item">
+                            <div class="stat-value">128</div>
+                            <div class="stat-label">Total</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">95%</div>
+                            <div class="stat-label">Pass Rate</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Concerns</div>
+                        </div>
+                    </div>
+                    <ul class="student-list">
+                        <li class="student-item">
+                            <span class="student-name">John Smith</span>
+                            <span class="student-id">ID: 10045</span>
+                        </li>
+                        <li class="student-item">
+                            <span class="student-name">Mary Johnson</span>
+                            <span class="student-id">ID: 10078</span>
+                        </li>
+                        <li class="student-item">
+                            <span class="student-name">Robert Davis</span>
+                            <span class="student-id">ID: 10096</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-link">View student roster →</a>
+                </div>
+            </div>
+            
+            <!-- Grading card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">Pending Grades</h2>
+                    <div class="card-icon grading-icon">✏️</div>
+                </div>
+                <div class="card-content">
+                    <div class="statistics">
+                        <div class="stat-item">
+                            <div class="stat-value">18</div>
+                            <div class="stat-label">To Grade</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">3</div>
+                            <div class="stat-label">Days Left</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">82%</div>
+                            <div class="stat-label">Complete</div>
+                        </div>
+                    </div>
+                    <ul class="grade-list">
+                        <li class="grade-item">
+                            <span class="grade-item-name">JavaScript Project</span>
+                            <span class="grade-status">18 submissions</span>
+                        </li>
+                        <li class="grade-item">
+                            <span class="grade-item-name">Database Quiz</span>
+                            <span class="grade-status">24 submissions</span>
+                        </li>
+                        <li class="grade-item">
+                            <span class="grade-item-name">Final Project Proposal</span>
+                            <span class="grade-status">15 submissions</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-link">Go to grading center →</a>
+                </div>
+            </div>
+            
+            <!-- Performance card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">Class Performance</h2>
+                    <div class="card-icon calendar-icon">📊</div>
+                </div>
+                <div class="card-content">
+                    <div class="chart-container">
+                        <div class="chart-bar bar-a"></div>
+                        <div class="chart-bar bar-b"></div>
+                        <div class="chart-bar bar-c"></div>
+                        <div class="chart-bar bar-d"></div>
+                        <div class="chart-bar bar-f"></div>
+                        
+                        <div class="chart-label label-a">A (35%)</div>
+                        <div class="chart-label label-b">B (42%)</div>
+                        <div class="chart-label label-c">C (15%)</div>
+                        <div class="chart-label label-d">D (5%)</div>
+                        <div class="chart-label label-f">F (3%)</div>
+                    </div>
+                    <div style="text-align: center; margin-top: 30px; font-size: 14px; color: #7f8c8d;">
+                        Grade distribution for CS210: Web Development
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-link">View detailed analytics →</a>
+                </div>
+            </div>
+            
+            <!-- Quick actions card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">Teaching Tools</h2>
+                    <div class="card-icon calendar-icon">🛠️</div>
+                </div>
+                <div class="card-content">
+                    <div class="action-buttons">
+                        <button class="action-btn btn-primary">Create Assignment</button>
+                        <button class="action-btn btn-primary">Schedule Exam</button>
+                        <button class="action-btn btn-secondary">Take Attendance</button>
+                        <button class="action-btn btn-secondary">Send Announcement</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- To-do list card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">Teaching To-Do</h2>
+                    <div class="card-icon calendar-icon">📋</div>
+                </div>
+                <div class="card-content">
+                    <ul class="todo-list">
+                        <li class="todo-item">
+                            <div class="todo-checkbox checked"></div>
+                            <div class="todo-text completed">Update CS101 syllabus</div>
+                            <div class="todo-due">Completed</div>
+                        </li>
+                        <li class="todo-item">
+                            <div class="todo-checkbox"></div>
+                            <div class="todo-text">Grade JavaScript projects</div>
+                            <div class="todo-due">Today</div>
+                        </li>
+                        <li class="todo-item">
+                            <div class="todo-checkbox"></div>
+                            <div class="todo-text">Prepare midterm exam</div>
+                            <div class="todo-due">May 12</div>
+                        </li>
+                        <li class="todo-item">
+                            <div class="todo-checkbox"></div>
+                            <div class="todo-text">Department meeting</div>
+                            <div class="todo-due">May 15</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-link">Add new task</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Upcoming classes section -->
+        <div class="classes-section">
+            <h2 class="section-title">Today's Schedule</h2>
+            <div class="classes-timeline">
+                <div class="class-card">
+                    <div class="class-time">9:00 AM - 10:30 AM</div>
+                    <div class="class-title">CS201: Data Structures</div>
+                    <div class="class-details"><strong>Topic:</strong> Binary Search Trees</div>
+                    <div class="class-details"><strong>Room:</strong> 302, Tech Building</div>
+                    <div class="class-details"><strong>Students:</strong> 35</div>
+                    <div class="action-buttons">
+                        <button class="action-btn btn-primary">Start Class</button>
+                        <button class="action-btn btn-secondary">Materials</button>
+                    </div>
+                </div>
+                <div class="class-card">
+                    <div class="class-time">12:00 PM - 1:30 PM</div>
+                    <div class="class-title">CS101: Programming Fundamentals</div>
+                    <div class="class-details"><strong>Topic:</strong> Functions and Methods</div>
+                    <div class="class-details"><strong>Room:</strong> 105, Main Building</div>
+                    <div class="class-details"><strong>Students:</strong> 42</div>
+                    <div class="action-buttons">
+                        <button class="action-btn btn-primary">Start Class</button>
+                        <button class="action-btn btn-secondary">Materials</button>
+                    </div>
+                </div>
+                <div class="class-card">
+                    <div class="class-time">3:00 PM - 4:30 PM</div>
+                    <div class="class-title">CS210: Web Development</div>
+                    <div class="class-details"><strong>Topic:</strong> JavaScript Event Handling</div>
+                    <div class="class-details"><strong>Room:</strong> 302, Tech Building</div>
+                    <div class="class-details"><strong>Students:</strong> 28</div>
+                    <div class="action-buttons">
+                        <button class="action-btn btn-primary">Start Class</button>
+                        <button class="action-btn btn-secondary">Materials</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent notifications -->
+        <div class="classes-section">
+            <h2 class="section-title">Recent Notifications</h2>
+            <ul class="notification-list">
+                <li class="notification-item">
+                    <div class="notification-icon">📝</div>
+                    <div class="notification-message">
+                        <div class="notification-title">Assignment Submissions</div>
+                        <div class="notification-text">5 new students submitted their JavaScript projects</div>
+                        <div class="notification-time">15 minutes ago</div>
+                    </div>
+                </li>
+                <li class="notification-item">
+                    <div class="notification-icon">❓</div>
+                    <div class="notification-message">
+                        <div class="notification-title">Student Question</div>
+                        <div class="notification-text">John Smith asked a question about assignment #3</div>
+                        <div class="notification-time">45 minutes ago</div>
+                    </div>
+                </li>
+                <li class="notification-item">
+                    <div class="notification-icon">📅</div>
+                    <div class="notification-message">
+                        <div class="notification-title">Department Meeting</div>
+                        <div class="notification-text">Reminder: CS Department meeting tomorrow at 2 PM</div>
+                        <div class="notification-time">2 hours ago</div>
+                    </div>
+                </li>
+                <li class="notification-item">
+                    <div class="notification-icon">🔔</div>
+                    <div class="notification-message">
+                        <div class="notification-title">System Notification</div>
+                        <div class="notification-text">Grading deadline for Web Development extended to May 20</div>
+                        <div class="notification-time">Yesterday</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+        window.location.href = 'index.html';
+    });
+    </script>
+</body>
+</html>

@@ -1588,6 +1588,37 @@
       }
     }
   </style>
+
+  <!--Login Style-->
+<style>
+  .login-btn {
+    background: linear-gradient(135deg, var(--accent), #f08871);
+    color: white;
+      padding: clamp(6px, 1.5vw, 9px) clamp(12px, 2.5vw, 18px);
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: clamp(0.8rem, 1.1vw, 1rem);
+      box-shadow: 0 4px 12px rgba(61, 90, 128, 0.3);
+      transition: var(--transition);
+      margin-left: clamp(4px, 1vw, 8px);
+      white-space: nowrap;
+  }
+
+  .login-btn:hover {
+    background: linear-gradient(135deg, #f08871, var(--accent));
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 992px) {
+    .login-btn {
+      margin: 15px 65px;
+        text-align: center;
+        display: block;
+        padding: 8px;
+        width:50%;
+    }
+  }
+</style>
 </head>
 
 <body>
@@ -1607,7 +1638,7 @@
       </div>
       <ul class="nav-menu">
         <li class="nav-item dropdown">
-          <a href="index.html#about" class="nav-link">
+          <a href="#" class="nav-link">
             About Us
             <i>▾</i>
           </a>
@@ -1615,11 +1646,11 @@
             <a href="about_School.html" class="dropdown-link">About School</a>
             <a href="founder_Chairman.html" class="dropdown-link">Founder Chairman</a>
             <a href="vision_phy.html" class="dropdown-link">Vision and Philosophy</a>
-            <a href="why_us.html" class="dropdown-link active">Why Choose Us</a>
+            <a href="why_us.html" class="dropdown-link">Why Choose Us</a>
           </div>
         </li>
         <li class="nav-item dropdown">
-          <a href="index.html#academics" class="nav-link">
+          <a href="#academics" class="nav-link">
             Academics
             <i>▾</i>
           </a>
@@ -1628,26 +1659,29 @@
           </div>
         </li>
         <li class="nav-item">
-          <a href="index.html#school-life" class="nav-link">
+          <a href="#school-life" class="nav-link">
             School Life
           </a>
         </li>
         <li class="nav-item">
-          <a href="index.html#facilities" class="nav-link">
+          <a href="#facilities" class="nav-link">
             Facilities
           </a>
         </li>
         <li class="nav-item">
-          <a href="index.html#advantages" class="nav-link">Advantages</a>
+          <a href="#advantages" class="nav-link">Advantages</a>
         </li>
         <li class="nav-item">
-          <a href="index.html#gallery" class="nav-link">Photo Gallery</a>
+          <a href="#gallery" class="nav-link">Photo Gallery</a>
         </li>
         <li class="nav-item">
-          <a href="index.html#admission" class="nav-link">Admission</a>
+          <a href="#admission" class="nav-link">Admission</a>
         </li>
         <li class="nav-item">
-          <a href="index.html#contact_us_link" class="contact-btn">Contact Us</a>
+          <a href="#contact_us_link" class="contact-btn">Contact Us</a>
+        </li>
+        <li class="nav-item">
+          <a href="login.html" class="login-btn">Login</a>
         </li>
       </ul>
     </div>
