@@ -2570,38 +2570,6 @@
     }
   </style>
 
-  <!--Login Style-->
-  <style>
-    .login-btn {
-      background: linear-gradient(135deg, var(--accent), #f08871);
-      color: white;
-      padding: clamp(6px, 1.5vw, 9px) clamp(12px, 2.5vw, 18px);
-      border-radius: 50px;
-      font-weight: 500;
-      font-size: clamp(0.8rem, 1.1vw, 1rem);
-      box-shadow: 0 4px 12px rgba(61, 90, 128, 0.3);
-      transition: var(--transition);
-      margin-left: clamp(4px, 1vw, 8px);
-      white-space: nowrap;
-    }
-
-    .login-btn:hover {
-      background: linear-gradient(135deg, #f08871, var(--accent));
-      transform: translateY(-2px);
-    }
-
-    @media (max-width: 992px) {
-      .login-btn {
-        margin: 15px 65px;
-        text-align: center;
-        display: block;
-        padding: 8px;
-        width: 50%;
-      }
-    }
-  </style>
-
-
 </head>
 
 <body>
@@ -2662,9 +2630,6 @@
         </li>
         <li class="nav-item">
           <a href="#contact_us_link" class="contact-btn">Contact Us</a>
-        </li>
-        <li class="nav-item">
-          <a href="login.html" class="login-btn">Login</a>
         </li>
       </ul>
     </div>
@@ -3667,55 +3632,58 @@
   </script>
 
   <!-- JS for Maps -->
-  <script>
-    // Self-executing function to create a scope for our variables
-    (function () {
-      // School location using Plus Code instead of latitude/longitude
-      const plusCode = "8G59+XP Badangpet, Telangana";
-      // Location name that will appear on the pin
-      const locationName = "Bala Siddhartha School";
+<script>
+  // Self-executing function to create a scope for our variables
+(function () {
+  // Exact coordinates for the school from the provided Google Maps URL
+  const latitude = 17.3057277;
+  const longitude = 78.5310333;
+  // Correct school name
+  const locationName = "Bala Siddartha Grammar High School";
 
-      // Function to open Google Maps
-      function slOpenGoogleMaps(e) {
-        e.preventDefault();
-        // This URL format uses the plus code and adds the location name
-        const googleMapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(locationName)}/@?q=${encodeURIComponent(plusCode)}`;
-        window.open(googleMapsUrl, '_blank');
+  // Function to open Google Maps
+  function slOpenGoogleMaps(e) {
+    e.preventDefault();
+    // This URL format uses exact coordinates and the correct school name
+    const googleMapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(locationName)}/@${latitude},${longitude},19z`;
+    window.open(googleMapsUrl, '_blank');
+  }
+
+  // Wait for DOM to be fully loaded
+  document.addEventListener('DOMContentLoaded', function () {
+    // Add click event to the button
+    const directionsBtn = document.getElementById('sl-directions-btn');
+    if (directionsBtn) {
+      directionsBtn.addEventListener('click', slOpenGoogleMaps);
+    }
+
+    // Add click event to the map container
+    const mapLink = document.getElementById('sl-map-link');
+    if (mapLink) {
+      mapLink.addEventListener('click', slOpenGoogleMaps);
+    }
+
+    // For iframe, use exact coordinates and the correct school name
+    const mapFrame = document.getElementById('sl-map-iframe');
+    if (mapFrame) {
+      //mapFrame.src = `https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(locationName)}&center=${latitude},${longitude}&zoom=19`;
+      
+      // If you don't have an API key, use this alternative approach
+      mapFrame.src = `https://maps.google.com/maps?q=${latitude},${longitude}&z=19&output=embed&t=m&iwloc=near&q=${encodeURIComponent(locationName)}`;
+
+      // Check if on mobile and set appropriate behavior
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      if (isMobile) {
+        // Mobile-specific adjustments if needed
+        const mapLinks = document.querySelectorAll('.sl-map-link');
+        mapLinks.forEach(link => {
+          link.style.fontSize = '0.7rem';
+        });
       }
-
-      // Wait for DOM to be fully loaded
-      document.addEventListener('DOMContentLoaded', function () {
-        // Add click event to the button
-        const directionsBtn = document.getElementById('sl-directions-btn');
-        if (directionsBtn) {
-          directionsBtn.addEventListener('click', slOpenGoogleMaps);
-        }
-
-        // Add click event to the map container
-        const mapLink = document.getElementById('sl-map-link');
-        if (mapLink) {
-          mapLink.addEventListener('click', slOpenGoogleMaps);
-        }
-
-        // For iframe, use a public Google Maps embedding approach that shows the name
-        const mapFrame = document.getElementById('sl-map-iframe');
-        if (mapFrame) {
-          // Use search parameter to show the name and place parameter for location
-          mapFrame.src = `https://maps.google.com/maps?q=${encodeURIComponent(locationName)}+${encodeURIComponent(plusCode)}&output=embed`;
-
-          // Check if on mobile and set appropriate behavior
-          const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-          if (isMobile) {
-            // Mobile-specific adjustments if needed
-            const mapLinks = document.querySelectorAll('.sl-map-link');
-            mapLinks.forEach(link => {
-              link.style.fontSize = '0.7rem';
-            });
-          }
-        }
-      });
-    })(); // Immediately invoke function to create scope
-  </script>>
+    }
+  });
+})(); // Immediately invoke function to create scope
+</script>
 
   <!--JS for Admissions forms-->
   <script>
